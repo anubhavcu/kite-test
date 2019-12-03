@@ -15,11 +15,9 @@ export default {
 				content: 'Find Twitter lists in your niche, explore the data and download all the subscribers and members'
 			}
 		],
-		link: [{
-			rel: 'icon',
-			type: 'image/x-icon',
-			href: '/favicon.ico'
-		}]
+		link: [
+			{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+		]
 	},
 
 	loading: {

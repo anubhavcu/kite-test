@@ -12,6 +12,15 @@
     <nuxt />
   </div>
 </template>
+<script>
+export default {
+	head() {
+		return {
+			link: [ { rel: 'canonical', href: `https://jump.sh${this.$route.path.length>1 ? this.$route.path : ''}` } ]
+		}
+	}
+}
+</script>
 
 <style>
 
