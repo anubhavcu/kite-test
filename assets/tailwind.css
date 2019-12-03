@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+
+.my-form{
+	@apply appearance-none py-3 px-4 bg-gray-200 border border-gray-300 text-base text-gray-700 rounded leading-tight;
+}
+.btn {
+	@apply appearance-none cursor-pointer py-3 px-4 bg-black text-base text-white rounded leading-tight;
+}
+.my-form:focus, button:focus{
+	outline:0;
+	@apply border-blue-400;
+}
+.middle{
+	@apply flex justify-center items-center;
+}
+
+.h-page { /* PAGE LESS NAVBAR */
+	min-height: calc(100vh - 2.5rem);
+}
+
+.tw-bg{
+	background: #1da1f2;
+}
+.tw-color{
+	color: #1da1f2;
+}
+
+.max-w-big{
+	max-width: 100rem;
+}
+
+@tailwind utilities;
