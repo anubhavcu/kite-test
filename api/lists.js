@@ -1,9 +1,11 @@
 const axios = require('axios')
-const custom_search_api_key = "AIzaSyC9BlF6PUUiyQ397Mn_hFOhb81VL-A0-58"
 import { parse } from 'node-html-parser';
 
 const NodeCache = require( "node-cache" );
 const myCache = new NodeCache( { stdTTL: 14400, checkperiod: 300 } );
+
+const custom_search = process.env.CUSTOM_SEARCH_API_KEY
+const token = process.env.TWITTER_API_KEY
 
 module.exports = async (req, res) => {
 	if (req.method == "GET") {
@@ -15,7 +17,7 @@ module.exports = async (req, res) => {
 		const cachedValue = myCache.get(q)
 		if (cachedValue){ return res.status(200).json(cachedValue)}
 		const url = "https://www.googleapis.com/customsearch/v1/siterestrict"
-		const params = {cx:"013322004514320345947:mnxnibvixbl",q:q, key:custom_search_api_key, imgSize:"small", num:10}
+		const params = {cx:"013322004514320345947:mnxnibvixbl",q:q, key:custom_search, imgSize:"small", num:10}
 		const r = await axios.get(url, {params:params}).then(r => r.data.items) || []
 		const final = r.map(e => ({title:e.title, link:e.link, snippet:e.snippet, followers:null, friends:null, image:'cse_image' in e.pagemap ? e.pagemap.cse_image[0].src : null, }))
 		const apiCalls = r.map(u => axios.get(u.link).then(r => r.data || null).catch(() => null))

@@ -1,11 +1,9 @@
 // import Papa from 'papaparse'
 const axios = require('axios')
-const custom_search_api_key = "AIzaSyC9BlF6PUUiyQ397Mn_hFOhb81VL-A0-58"
 const parse5 = require('parse5');
 const cheerio = require('cheerio');
-const custom_search = "AIzaSyC9BlF6PUUiyQ397Mn_hFOhb81VL-A0-58"
-const token = "AAAAAAAAAAAAAAAAAAAAAB5B2gAAAAAAnrzUv%2B8%2BJAe0TeXXeIaWIYMJhdQ%3DibOF0WEvXpp901BBG3ITU1ZHzkk3B8eiJkdYXqCztSrc4eRiZC"
-const bearer = "Bearer " + token
+const custom_search = process.env.CUSTOM_SEARCH_API_KEY
+const token = process.env.TWITTER_API_KEY
 
 import { parse } from 'node-html-parser';
 
