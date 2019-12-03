@@ -21,7 +21,7 @@
 
 		<div class='px-4 pb-6 h-page max-w-big mx-auto' v-if="lists.length">
 			<div class='flex flex-wrap-reverse'>
-				<div class='w-full md:w-7/12 md:pr-10'>
+				<div class='w-full md:w-7/12 md:pr-20'>
 					<div v-for="l, index in lists" :key='index'>
 						<div class="md:flex bg-white rounded-lg p-4 rounded border border-gray-200 my-3 items-center">
 							<img class="border border-gray-400 h-10 w-10 md:h-16 md:w-16 rounded-full mx-auto md:mx-0 md:mr-6 shadow-inner" :alt="l.title" :src="l.image ? l.image : '/tw.png'">
@@ -53,7 +53,7 @@
 						<h1 class='text-2xl font-bold'>Download these leads</h1>
 						<h2>You can download a CSV file containing {{total.all}} potential leads. This file can be uploaded to twitter ads as a custom audience to create super targeted ads!</h2>
 						<div class='my-4'>
-							If you think you will use the tool a lot you can <nuxt-link class='text-blue-500 cursor-pointer' to="/subscribe">buy a subscription and download unlimted lists each month</nuxt-link>.
+							If you think you will use the tool a lot you can <nuxt-link class='text-blue-500 cursor-pointer' to="/pro">buy a subscription and download unlimted lists each month</nuxt-link>.
 						</div>
 						<div class='my-4'>
 							<div class=" mb-6 font-light">
