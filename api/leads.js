@@ -1,13 +1,9 @@
-const Papa = require('papaparse');
 const axios = require('axios')
-const custom_search = process.env.JUMP_CUSTOM_SEARCH_API_KEY
-const token = process.env.JUMP_TWITTER_API_KEY
-
-const NodeCache = require( "node-cache" );
-const myCache = new NodeCache( { stdTTL: 14400, checkperiod: 300 } );
+const utils = require('./_utils.js');
 
 module.exports = async (req, res) => {
 	if (req.method == "POST") {
+		const myCache = await utils.getCache()
 		const links = req.body.links || []
 		const download = req.body.download // 0, 1 or 2
 		if (!links.length){
@@ -22,7 +18,7 @@ module.exports = async (req, res) => {
 		for (let ix = 0, len = endpoints.length; ix < len; ix++) {
 			const endpoint = endpoints[ix]
 			const type = ['subscriber', 'member'][ix]
-			const headers = {"Authorization": "Bearer "+token }
+			const headers = {"Authorization": "Bearer "+process.env.JUMP_TWITTER_API_KEY }
 			const apiCalls = []
 			links.forEach(url => {
 				const path = url ? url.toLowerCase().replace("https://twitter.com/", "").replace("http://twitter.com/", "") : ''
