@@ -30,7 +30,7 @@ export default {
 	modules: ['@nuxtjs/axios'],
 	axios: {
 		retry: { retries: 3 },
-		baseURL:"http://localhost:3000"
+		baseURL: process.env.API_URL
 	},
 	tailwindcss: {
 		configPath: '~/tailwind.config.js',
