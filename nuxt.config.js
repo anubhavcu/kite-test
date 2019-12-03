@@ -34,11 +34,7 @@ export default {
 		configPath: '~/tailwind.config.js',
 		cssPath: '~/assets/tailwind.css'
 	},
-	generate: {
-		fallback: true,
-		dir: 'public',
-		subFolders: false, // to remove ending / on Netlify
-	},
+	generate: { fallback: true,  dir: 'public'},
 	build: {
 		postcss: {
 			plugins: {

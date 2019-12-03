@@ -16,7 +16,7 @@
 export default {
 	head() {
 		return {
-			link: [ { rel: 'canonical', href: `https://jump.sh${this.$route.path.length>1 ? this.$route.path : ''}` } ]
+			link: [ { rel: 'canonical', href: `https://jump.sh${this.$route.path && this.$route.path.endsWith("/") ? this.$route.path.slice(0, -1) : this.$route.path}` } ]
 		}
 	}
 }
