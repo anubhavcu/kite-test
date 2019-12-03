@@ -8,7 +8,7 @@
 		"JUMP_FIREBASE_TYPE": "@jump_firebase_type",
 		"JUMP_FIREBASE_PRIVATE_KEY_ID": "@jump_firebase_private_key_id",
 		"JUMP_FIREBASE_PROJECT_ID": "@jump_firebase_project_id",
-		"JUMP_FIREBASE_PRIVATE_KEY": "@jump_firebase_secret_key",
+		"JUMP_FIREBASE_PRIVATE_KEY": "@jump_firebase_private_key",
 		"JUMP_FIREBASE_CLIENT_EMAIL": "@jump_firebase_client_email",
 		"JUMP_FIREBASE_CLIENT_ID": "@jump_firebase_client_id",
 		"JUMP_FIREBASE_AUTH_URI": "@jump_firebase_auth_uri",
