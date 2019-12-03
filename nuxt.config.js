@@ -38,6 +38,7 @@ export default {
 	},
 	generate: {
 		fallback: true,
+		dir: 'public',
 		subFolders: false, // to remove ending / on Netlify
 	},
 	build: {
