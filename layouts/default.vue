@@ -1,6 +1,6 @@
 <template>
   <div class='h-page bg-gray-100 max-w-big border-l border-r border-gray-200 mx-auto'>
-	<div class='h-10 flex justify-between px-2 items-center border-b border-gray-200 max-w-big'>
+	<div class='h-10 flex justify-between px-4 items-center border-b border-gray-200 max-w-big'>
 		<div>
 			<nuxt-link to="/" class='text-black font-bold'>Jump<span class='text-gray-500 font-hairline'>.sh</span></nuxt-link>
 		</div>
