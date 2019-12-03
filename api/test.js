@@ -7,7 +7,7 @@ const token = process.env.JUMP_TWITTER_API_KEY
 
 import { parse } from 'node-html-parser';
 
-// const root = parse('<ul id="list"><li>Hello World</li></ul>');
+//  const root = parse('<ul id="list"><li>Hello World</li></ul>');
 
 module.exports = async (req, res) => {
 	if (req.method == "GET") {
