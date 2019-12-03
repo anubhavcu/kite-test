@@ -1,4 +1,4 @@
-]const Papa = require('papaparse');
+const Papa = require('papaparse');
 const axios = require('axios')
 const custom_search = process.env.CUSTOM_SEARCH_API_KEY
 const token = process.env.TWITTER_API_KEY
