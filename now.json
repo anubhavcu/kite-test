@@ -2,18 +2,18 @@
 	"alias": ["jump.sh"],
 	"public": false,
 	"env": {
-		"NODE_ENV": "@node_env",
-		"CUSTOM_SEARCH_API_KEY": "@custom_search_api_key",
-		"TWITTER_API_KEY": "@twitter_api_key",
-		"FIREBASE_TYPE": "@firebase_type",
-		"FIREBASE_PRIVATE_KEY_ID": "@firebase_private_key_id",
-		"FIREBASE_PROJECT_ID": "@firebase_project_id",
-		"FIREBASE_PRIVATE_KEY": "@firebase_secret_key",
-		"FIREBASE_CLIENT_EMAIL": "@firebase_client_email",
-		"FIREBASE_CLIENT_ID": "@firebase_client_id",
-		"FIREBASE_AUTH_URI": "@firebase_auth_uri",
-		"FIREBASE_TOKEN_URI": "@firebase_token_uri",
-		"FIREBASE_AUTH_PROVIDER_X509_CERT_URL": "@firebase_auth_provider_x509_cert_url",
-		"FIREBASE_CLIENT_X509_CERT_URL": "@firebase_client_x509_cert_url"
+		"JUMP_NODE_ENV": "@jump_node_env",
+		"JUMP_CUSTOM_SEARCH_API_KEY": "@jump_custom_search_api_key",
+		"JUMP_TWITTER_API_KEY": "@jump_twitter_api_key",
+		"JUMP_FIREBASE_TYPE": "@jump_firebase_type",
+		"JUMP_FIREBASE_PRIVATE_KEY_ID": "@jump_firebase_private_key_id",
+		"JUMP_FIREBASE_PROJECT_ID": "@jump_firebase_project_id",
+		"JUMP_FIREBASE_PRIVATE_KEY": "@jump_firebase_secret_key",
+		"JUMP_FIREBASE_CLIENT_EMAIL": "@jump_firebase_client_email",
+		"JUMP_FIREBASE_CLIENT_ID": "@jump_firebase_client_id",
+		"JUMP_FIREBASE_AUTH_URI": "@jump_firebase_auth_uri",
+		"JUMP_FIREBASE_TOKEN_URI": "@jump_firebase_token_uri",
+		"JUMP_FIREBASE_AUTH_PROVIDER_X509_CERT_URL": "@jump_firebase_auth_provider_x509_cert_url",
+		"JUMP_FIREBASE_CLIENT_X509_CERT_URL": "@jump_firebase_client_x509_cert_url"
 	}
 }

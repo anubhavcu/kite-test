@@ -2,8 +2,8 @@
 const axios = require('axios')
 const parse5 = require('parse5');
 const cheerio = require('cheerio');
-const custom_search = process.env.CUSTOM_SEARCH_API_KEY
-const token = process.env.TWITTER_API_KEY
+const custom_search = process.env.JUMP_CUSTOM_SEARCH_API_KEY
+const token = process.env.JUMP_TWITTER_API_KEY
 
 import { parse } from 'node-html-parser';
 

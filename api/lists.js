@@ -4,8 +4,8 @@ import { parse } from 'node-html-parser';
 const NodeCache = require( "node-cache" );
 const myCache = new NodeCache( { stdTTL: 14400, checkperiod: 300 } );
 
-const custom_search = process.env.CUSTOM_SEARCH_API_KEY
-const token = process.env.TWITTER_API_KEY
+const custom_search = process.env.JUMP_CUSTOM_SEARCH_API_KEY
+const token = process.env.JUMP_TWITTER_API_KEY
 
 module.exports = async (req, res) => {
 	if (req.method == "GET") {
