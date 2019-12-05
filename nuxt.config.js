@@ -1,3 +1,5 @@
+const isProd = process.env.JUMP_NODE_ENV == "prod"
+
 export default {
 	mode: 'universal',
 	head: {
@@ -19,12 +21,12 @@ export default {
 			{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
 		]
 	},
-
+	googleAnalytics: { id: 'UA-153958572-1'},
 	loading: {
 		color: '#fff'
 	},
 	css: ['~/assets/tailwind.css'],
-	buildModules: ['@nuxtjs/tailwindcss'],
+	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-analytics'],
 	modules: ['@nuxtjs/axios'],
 	axios: {
 		retry: { retries: 3 },

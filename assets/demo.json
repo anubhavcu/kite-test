@@ -1,0 +1,62 @@
+[
+  {
+    "list": "https://twitter.com/handle/lists/list-name",
+    "type": "subscriber",
+    "handle": "user_handle",
+    "name": "Name",
+    "location": "user_location",
+    "description": "User Description",
+    "url": "https://t.co/123",
+    "followers": 8,
+    "following": 254,
+    "statuses": 0
+  },
+  {
+    "list": "https://twitter.com/handle/lists/list-name",
+    "type": "subscriber",
+    "handle": "user_handle",
+    "name": "Name",
+    "location": "Indianapolis, IN",
+    "description": "User Description",
+    "url": "https://t.co/124",
+    "followers": 8,
+    "following": 4996,
+    "statuses": 2109
+  },
+  {
+    "list": "https://twitter.com/handle/lists/list-name",
+    "type": "subscriber",
+    "handle": "user_handle",
+    "name": "Name",
+    "location": "Mumbai, India",
+    "description": "User Description",
+    "url": "https://t.co/125",
+    "followers": 241,
+    "following": 791,
+    "statuses": ""
+  },
+  {
+    "list": "https://twitter.com/handle/lists/list-name",
+    "type": "subscriber",
+    "handle": "user_handle",
+    "name": "Name",
+    "location": "Seattle, USA",
+    "description": "User Description",
+    "url": "https://t.co/126",
+    "followers": 322,
+    "following": 3423,
+    "statuses": 252
+  },
+  {
+    "list": "https://twitter.com/handle/lists/list-name",
+    "type": "subscriber",
+    "handle": "user_handle",
+    "name": "Name",
+    "location": "Rome, Italy",
+    "description": "User Description",
+    "url": "https://t.co/127",
+    "followers": 505,
+    "following": 857,
+    "statuses": 1633
+  }
+]

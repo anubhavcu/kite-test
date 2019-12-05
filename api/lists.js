@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 			.then(r => {return r.data.items || false})
 			.catch(e => {console.log(e); return false} )
 			if (pageLists){
-				const cleanLists = pageLists.map(e => ({title:e.title, link:e.link, snippet:e.snippet, followers:null, friends:null, image:'cse_image' in e.pagemap ? e.pagemap.cse_image[0].src : null, }))
+				const cleanLists = pageLists.map(e => ({title:e.title, link:e.link, snippet:e.snippet, members:null, subscribers:null, image:'cse_image' in e.pagemap ? e.pagemap.cse_image[0].src : null, }))
 				lists = [...lists, ...cleanLists]
 			} else {
 				console.error(`Error getting the custom search page ${p+1}`)
@@ -47,8 +47,8 @@ module.exports = async (req, res) => {
 					if (selector){
 						const st = selector.structuredText.split("\n")
 						if (st.length == 2){
-							lists[i].followers = parseInt(st[0].replace(/\D/g,''))
-							lists[i].friends = parseInt(st[1].replace(/\D/g,''))
+							lists[i].members = parseInt(st[0].replace(/\D/g,''))
+							lists[i].subscribers = parseInt(st[1].replace(/\D/g,''))
 						} else {
 							console.error(`error with selectors length: Selectors are: ${selector}`)
 						}

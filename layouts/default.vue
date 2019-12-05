@@ -5,6 +5,8 @@
 			<a href="/" class='text-black font-bold'>Jump<span class='text-gray-500 font-hairline'>.sh</span></a>
 		</div>
 		<div class='text-blue-600 font-light'>
+			<nuxt-link to="/demo" class="mr-4">Demo</nuxt-link>
+			<nuxt-link to="/export" class="mr-4">Export</nuxt-link>
 			<nuxt-link to="/pro" class="mr-4">Pro</nuxt-link>
 			<nuxt-link to="/support">Support</nuxt-link>
 		</div>

@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 			links.forEach(url => {
 				const path = url ? url.toLowerCase().replace("https://twitter.com/", "").replace("http://twitter.com/", "") : ''
 				const values = path.split("/lists/")
-				if (values.length !== 2) {
+				if (values.length < 2) {
 					console.error(`The path: ${path} is malformed`)
 				} else {
 					const payload = { owner_screen_name: values[0], slug: values[1], count: "5000", include_entities:false, skip_status:true}
@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
 				lists.forEach((usersData, i ) => {
 					console.log(usersData)
 					if (usersData && usersData['users']) {
-						const users = usersData['users'].map(u => ({list:links[i], type:type, name:u.name, handle:u.handle, location:u.location, description:u.description, url:u.url, followers:u.followers_count, friends:u.friends_count, statuses:u.statuses_count}))
+						const users = usersData['users'].map(u => ({list:links[i], type:type, handle:u.screen_name, name:u.name, location:u.location, description:u.description, url:u.url, followers:u.followers_count, following:u.friends_count, statuses:u.statuses_count}))
 						apiData = [...apiData, ...users]
 					} else {
 						console.error(`Problem with list: ${links[i]}`)

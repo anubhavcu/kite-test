@@ -22,19 +22,30 @@
 		<div class='px-4 pb-6 h-page max-w-big mx-auto' v-if="lists.length">
 			<div class='flex flex-wrap-reverse'>
 				<div class='w-full md:w-7/12 md:pr-20'>
-					<div v-for="l, index in lists" :key='index'>
-						<div class="md:flex bg-white rounded-lg p-4 rounded border border-gray-200 my-3 items-center">
+					<div class='flex justify-between items-center mt-3'>
+						<p class='text-sm text-gray-800'>{{lists.length}} {{lists.length==1 ? 'list': 'lists'}} found</p>
+						<div class='inline-flex'>
+							<button class='px-2 border border-gray-300 border-r-0 text-gray-700 rounded rounded-r-none bg-gray-200 cursor-default' disabled>Sort By</button>
+							<select class='my-form cursor-pointer bg-gray-100 py-1 rounded-l-none' v-model="sortBy">
+								<option value="subscribers">Subscribers</option>
+								<option value="members">Members</option>
+								<option :value="null">Subscribers + Members</option>
+							</select>
+						</div>
+					</div>
+					<div v-for="l, index in sortedLists" :key='index'>
+						<div class="md:flex rounded-lg p-4 rounded border my-3 items-center" :class="[selectedLists.includes(l.link)?'bg-green-200 border-green-400 shadow':'bg-white border-gray-200', selectedLists.length>=5 && !selectedLists.includes(l.link)?'cursor-default bg-gray-200':'cursor-pointer']" @click="addRemoveList(l.link)">
 							<img class="border border-gray-400 h-10 w-10 md:h-16 md:w-16 rounded-full mx-auto md:mx-0 md:mr-6 shadow-inner" :alt="l.title" :src="l.image ? l.image : '/tw.png'">
 							<div class="text-center md:text-left">
 							  <h2 class="text-lg">{{l.title}}</h2>
 							  <div class="flex text-xs justify-center md:justify-start mt-2">
-								  <p class='inline-flex'>
-									<span class='px-2 rounded-l bg-gray-300'>Members</span>
-									<span class='px-1 rounded-r bg-white'>{{l.followers || "-"}}</span>
+								  <p class='inline-flex border border-gray-300 rounded'>
+									<span class='px-2 bg-gray-300'>Members</span>
+									<span class='px-1 rounded bg-white'>{{l.members || "-"}}</span>
 								  </p>
 								  <p class='inline-flex ml-3 border border-gray-300 rounded'>
-									<span class='px-1 rounded-l bg-gray-300'>Subscribers</span>
-									<span class='px-1 rounded-r bg-white'>{{l.friends || "-"}}</span>
+									<span class='px-2 bg-gray-300'>Subscribers</span>
+									<span class='px-1 rounded bg-white'>{{l.subscribers || "-"}}</span>
 								  </p>
 							  </div>
 							  <a class="tw-color text-xs" :href="l.link" target="_blank">{{l.link}}</a>
@@ -52,29 +63,12 @@
 					<div class='bg-green-100 rounded shadow-2xl p-6 border border-green-400' v-if="lists.length">
 						<h1 class='text-2xl font-bold'>Download these leads</h1>
 						<h2>You can download a CSV file containing {{total.all}} potential leads. This file can be uploaded to twitter ads as a custom audience to create super targeted ads!</h2>
-						<div class='my-4'>
-							If you think you will use the tool a lot you can <nuxt-link class='text-blue-500 cursor-pointer' to="/pro">buy a subscription and download unlimted lists each month</nuxt-link>.
+						<div v-if="!selectedLists.length" class='mt-5 p-2 rounded bg-yellow-400 border border-yellow-500'>
+							You can select up to 5 lists to download.
+							<br />Click on the list to select it or un-select it.
 						</div>
-						<div class='my-4'>
-							<div class=" mb-6 font-light">
-							  <label class='block'>
-								<input class="mr-2 leading-tight" type="radio" value="0" v-model.number="download">
-								<span class="text-sm"> Download {{total.subscribers}} subscribers for 19$ </span>
-							  </label>
-							  <label class='block'>
-								<input class="mr-2 leading-tight" type="radio" value="1" v-model.number="download">
-								<span class="text-sm"> Download {{total.members}} members for 19$ </span>
-							  </label>
-							  <label class='block'>
-								<input class="mr-2 leading-tight" type="radio" value="2" v-model.number="download">
-								<span class="text-sm"> Download all {{total.all}} (members & subscribers) leads for 29$ </span>
-							  </label>
-							</div>
-						</div>
-						<div>
-							<div class='btn bg-green-600 text-white uppercase text-lg font-semibold text-center' @click="downloadLeads">
-								Download
-							</div>
+						<div v-else>
+							<download :links="selectedLists" :total="total"></download>
 						</div>
 					</div>
 					</div>
@@ -85,15 +79,16 @@
 	</div>
 </template>
 <script>
-import Papa from 'papaparse'
-import saveAs from 'file-saver'
-
+import download from "~/components/download.vue"
 export default {
 	layout:'index',
+	components:{download},
 	data(){
 		return {
 			searchTerm:'',
+			sortBy: null,
 			lists:[],
+			selectedLists:[],
 			loading:false,
 			noData:false,
 			download:1,
@@ -115,26 +110,35 @@ export default {
 			this.lists = l || []
 		},
 
-		async downloadLeads(){
-			const download = this.download
-			const links = this.lists.map(l => l.link)
-			const r = await this.$axios.$post("/api/leads", {download:this.download, links:links})
-
-			const csvBom = '\uFEFF' // Fix for Äö etc characters
-			const csvContent = csvBom + Papa.unparse(r)
-			const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' })
-			await saveAs(blob, this.searchTerm)
+		addRemoveList(link){
+			const index = this.selectedLists.indexOf(link)
+			if (index == -1){
+				if (this.selectedLists.length >= 5){return;}
+				this.selectedLists.push(link)
+			} else {
+				this.selectedLists.splice(index, 1);
+			}
 		}
 	},
 	computed:{
 		total(){
+			const selected = this.lists.filter(l => this.selectedLists.includes(l.link))
 			const t = {
-				members: this.lists.reduce((a, b) => a + (b['followers'] || 0), 0),
-				subscribers: this.lists.reduce((a, b) => a + (b["friends"] || 0), 0)
+				members: selected.reduce((a, b) => a + (b['members'] || 0), 0),
+				subscribers: selected.reduce((a, b) => a + (b["subscribers"] || 0), 0)
 			}
 			t.all = t.members + t.subscribers
 			return t
+		},
+
+		sortedLists() {
+			const sortBy = this.sortBy
+			if (sortBy){
+				return this.lists.sort((a,b) => b[sortBy] - a[sortBy])
+			}
+			return this.lists.sort((a,b) => (b.subscribers + b.members) - (a.subscribers + a.members))
 		}
+
 	}
 }
 
