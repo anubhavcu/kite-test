@@ -46,13 +46,28 @@ export default {
 		}
 	},
 	methods:{
+		pay() {
+			const vm = this
+			if (this.$ga){
+				this.$ga.event('purchase', 'open-checkout', this.product, 0)
+			}
+
+			Paddle.Setup({ vendor: 27713, debug: false })
+			Paddle.Checkout.open({
+				product: 545547,
+				allowQuantity: false,
+				title: 'Jump.sh Export',
+				message: 'Your CSV will be immediately downloaded! This is a one time fee.',
+				disableLogout: true,
+				successCallback: function(paddleData) { vm.downloadLeads(paddleData) }
+			})
+    	},
 		async downloadLeads(){
 			const download = this.download
 			const r = await this.$axios.$post("/api/leads", {download:this.product, links:this.links})
-			const csvBom = '\uFEFF' // Fix for Äö etc characters
-			const csvContent = csvBom + Papa.unparse(r)
-			const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' })
-			await saveAs(blob, `Jump.sh_export.csv`)
+			if ("url" in r) {
+				this.$router.push(r.url)
+			}
 		},
 	}
 

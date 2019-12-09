@@ -1,6 +1,7 @@
 const axios = require('axios')
 const utils = require('./_utils.js');
-
+const postmark_api_key = "539bdbc4-016f-4f82-9232-1a52290bbc90"
+import Papa from 'papaparse'
 module.exports = async (req, res) => {
 	if (req.method == "POST") {
 		const myCache = await utils.getCache()
@@ -45,6 +46,20 @@ module.exports = async (req, res) => {
 		}
 
 		myCache.set(cacheName, apiData)
-		return res.status(200).json(apiData)
+
+		const csvBom = '\uFEFF' // Fix for Äö etc characters
+		const csvContent = csvBom + Papa.unparse(apiData)
+
+		// Storage
+		const now = Math.round(new Date().getTime());
+		const bucket = await utils.connectToFirebase('bucket')
+		const file = await bucket.file(`export_${now}.csv`)
+		const write = await file.save(csvContent)
+		const tsIn48Hours = now + (48 * 3600000); // 48h
+		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
+
+		// Send CSV via email
+
+		return res.status(200).json({url:url})
 	}
 }

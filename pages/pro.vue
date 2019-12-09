@@ -1,5 +1,5 @@
 <template>
-  <div class='flex h-page items-center justify-center'>
+  <div class='flex h-page items-center justify-center -mt-20'>
 	  <div class='m-4 p-10 bg-white rounded shadow md:w-3/6'>
 		  <h1 class='font-semibold text-2xl'>Pro Plan $ 49/Month</h1>
 		  <ul class='list-inside list-none my-4 font-light'>
@@ -26,6 +26,28 @@ export default {
 			email:""
 		}
 	},
+	methods:{
+		pay(){
+			const vm = this
+			if (this.$ga){
+				this.$ga.event('purchase', 'open-checkout', plan_id, 1)
+			}
+			Paddle.Checkout.open({
+				product:plan_id,
+				allowQuantity: false,
+				disableLogout: true,
+				email:this.loggedInUser.email,
+				passthrough:this.loggedInUser.id,
+				successCallback: function(paddleData) {
+					vm.saveUser(paddleData)
+				}
+			})
+		},
+
+		saveUser(){
+			this.$router.push("/welcome")
+		}
+	}
 }
 </script>
 
