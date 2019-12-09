@@ -26,8 +26,11 @@
 		</div>
 	</div>
 	<div>
-		<div class='btn bg-green-600 text-white uppercase text-lg font-semibold text-center' @click="downloadLeads">
+		<div v-if="!downloading" class='btn bg-green-600 text-white uppercase text-lg font-semibold text-center' @click="downloadLeads">
 			Download
+		</div>
+		<div v-else class='btn bg-transparent cursor-default text-lg font-semibold text-center text-green-600'>
+			Downloading... Please wait...
 		</div>
 		<p class='text-sm text-center text-red-600 font-medium mt-1'>
 			Not happy with the results? We refund you immediately!
@@ -43,6 +46,7 @@ export default {
 	data(){
 		return {
 			product:0,
+			downloading:false,
 		}
 	},
 	methods:{
@@ -63,10 +67,11 @@ export default {
 			})
     	},
 		async downloadLeads(){
-			const download = this.download
+			this.downloading = true
 			const r = await this.$axios.$post("/api/leads", {download:this.product, links:this.links})
+			this.downloading = false
 			if ("url" in r) {
-				this.$router.push(r.url)
+				window.location.href = r.url
 			}
 		},
 	}

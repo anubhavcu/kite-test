@@ -57,9 +57,7 @@ module.exports = async (req, res) => {
 		const write = await file.save(csvContent)
 		const tsIn48Hours = now + (48 * 3600000); // 48h
 		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
-
 		// Send CSV via email
-
 		return res.status(200).json({url:url})
 	}
 }
