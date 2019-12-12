@@ -10,7 +10,7 @@
 		  </ul>
 		  <div class="mt-6 max-w-xl">
 			  <div class=''>
-				<nuxt-link class='btn bg-teal-600 text-white uppercase w-full block text-center font-semibold' to="/">Subscribe</nuxt-link>
+				<a class='btn bg-teal-600 text-white uppercase w-full block text-center font-semibold' @click="pay">Subscribe</a>
 			  </div>
 		  </div>
 	  </div>
@@ -23,21 +23,19 @@ export default {
 	layout:'index',
 	data(){
 		return {
-			email:""
 		}
 	},
 	methods:{
 		pay(){
 			const vm = this
 			if (this.$ga){
-				this.$ga.event('purchase', 'open-checkout', plan_id, 1)
+				this.$ga.event('purchase', 'open-checkout', 'agency', 1)
 			}
+			Paddle.Setup({ vendor: 27713, debug: false })
 			Paddle.Checkout.open({
-				product:plan_id,
+				product:577736,
 				allowQuantity: false,
 				disableLogout: true,
-				email:this.loggedInUser.email,
-				passthrough:this.loggedInUser.id,
 				successCallback: function(paddleData) {
 					vm.saveUser(paddleData)
 				}

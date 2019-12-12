@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div>
-		<div v-if="!downloading" class='btn bg-green-600 text-white uppercase text-lg font-semibold text-center' @click="downloadLeads">
+		<div v-if="!downloading" class='btn bg-green-600 text-white uppercase text-lg font-semibold text-center' @click="pay">
 			Download
 		</div>
 		<div v-else class='btn bg-transparent cursor-default text-lg font-semibold text-center text-green-600'>
@@ -55,10 +55,10 @@ export default {
 			if (this.$ga){
 				this.$ga.event('purchase', 'open-checkout', this.product, 0)
 			}
-
 			Paddle.Setup({ vendor: 27713, debug: false })
+			const prod = this.product==2 ? 577738 : 577737
 			Paddle.Checkout.open({
-				product: 545547,
+				product: prod,
 				allowQuantity: false,
 				title: 'Jump.sh Export',
 				message: 'Your CSV will be immediately downloaded! This is a one time fee.',
