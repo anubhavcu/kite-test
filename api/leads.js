@@ -1,3 +1,4 @@
+"use strict";
 const axios = require('axios')
 const utils = require('./_utils.js');
 const postmark_api_key = "539bdbc4-016f-4f82-9232-1a52290bbc90"

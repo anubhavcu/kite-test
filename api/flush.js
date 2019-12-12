@@ -1,3 +1,4 @@
+"use strict";
 const utils = require('./_utils.js');
 
 module.exports = async (req, res) => {

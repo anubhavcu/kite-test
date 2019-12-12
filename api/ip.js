@@ -1,4 +1,4 @@
-
+"use strict";
 module.exports = async (req, res) => {
 	if (req.method == "GET") {
 		const forwarded = req.headers['x-forwarded-for']
