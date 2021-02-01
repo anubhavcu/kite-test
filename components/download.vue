@@ -6,7 +6,7 @@
 	<div>
 		<p> Lists to download: </p>
 		<ul class='list-inside list-none'>
-			<li v-for="l in links" class='text-xs text-gray-600'>{{l}}</li>
+			<li v-for="(l,i) in links" :key="i" class='text-xs text-gray-600'>{{l}}</li>
 		</ul>
 	</div>
 	<div class='my-4'>
@@ -33,7 +33,7 @@
 			Downloading... Please wait...
 		</div>
 		<p class='text-sm text-center text-red-600 font-medium mt-1'>
-			Not happy with the results? We refund you immediately!
+			Not happy with the results? We refund you immediately<span @click="downloadLeads">!</span>
 		</p>
 	</div>
 </div>
@@ -60,7 +60,7 @@ export default {
 			Paddle.Checkout.open({
 				product: prod,
 				allowQuantity: false,
-				title: 'Jump.sh Export',
+				title: 'KiteList Export',
 				message: 'Your CSV will be immediately downloaded! This is a one time fee.',
 				disableLogout: true,
 				successCallback: function(paddleData) { vm.downloadLeads(paddleData) }

@@ -5,25 +5,42 @@
 	"author": "cosbgn",
 	"private": true,
 	"scripts": {
-		"dev": "nuxt",
-		"now-dev": "nuxt",
-		"build": "nuxt generate",
-		"nuxt-build": "nuxt build",
+		"dev": "npm run dev_backend & npm run dev_frontend --port 3000",
+		"dev_backend": "nodemon --watch api -r dotenv/config ./api/serverless.js",
+		"dev_frontend": "nuxt dev --port $port",
+		"prebuild": "",
+		"build": "nuxt build",
 		"start": "nuxt start",
-		"generate": "nuxt generate"
+		"analyze": "nuxt build --analyze",
+		"generate": "npm run prebuild && nuxt generate --modern",
+		"run_static": "nuxt serve",
+		"kill": "kill -9 $(lsof -t -i tcp:3000) && killall node && pkill node",
+		"netlify-dev": "npx netlify-cli dev",
+		"go-live": "npx localtunnel --port 3000 --subdomain kitelist"
 	},
 	"dependencies": {
-		"@google-cloud/firestore": "^2.6.1",
-		"@google-cloud/storage": "^4.1.3",
+		"@google-cloud/firestore": "^4.9.1",
+		"@google-cloud/storage": "^5.7.3",
+		"@nuxtjs/auth": "^4.9.1",
 		"@nuxtjs/axios": "^5.3.6",
+		"@nuxtjs/content": "^0.3.0",
 		"file-saver": "^2.0.2",
 		"node-cache": "^5.0.2",
-		"node-html-parser": "^1.1.16",
-		"nuxt": "^2.0.0",
+		"node-html-parser": "^2.1.0",
+		"nuxt": "^2.10.2",
 		"papaparse": "^5.1.0"
 	},
 	"devDependencies": {
 		"@nuxtjs/google-analytics": "^2.2.2",
-		"@nuxtjs/tailwindcss": "^1.0.0"
+		"@nuxtjs/proxy": "^2.1.0",
+		"@nuxtjs/sentry": "^5.0.0",
+		"@nuxtjs/tailwindcss": "^3.4.2",
+		"@sentry/node": "^6.0.3",
+		"aws-lambda-fastify": "^1.4.4",
+		"fastify": "^3.11.0",
+		"fastify-formbody": "^5.0.0",
+		"fastify-helmet": "^5.2.0",
+		"fastify-rate-limit": "^5.0.1",
+		"nodemon": "^2.0.7"
 	}
 }

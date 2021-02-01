@@ -1,147 +1,148 @@
 <template>
 	<div>
-		<div v-if="!lists.length" class="flex h-page items-center justify-center px-4">
-			<div class='md:w-1/2 md:-mt-32'>
-				<h1 class='text-2xl font-semibold'>Twitter List Search Engine</h1>
-				<h2 class='text-base'>Find Twitter lists relevant to you</h2>
-				<div class='my-8' v-show="!loading">
-					<div class='inline-flex items-stretch w-full'>
-						<input class='my-form bg-white rounded-r-none w-full' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" />
-						<button class="btn rounded-l-none tw-bg" @click="findLists">Search</button>
-					</div>
-				</div>
-				<div v-show="loading" class='my-5'>
-					<h2 class='text-4xl font-hairline text-gray-600'>Loading lists...</h2>
-				</div>
-				<div v-if="noData">
-					<h2 class='text-4xl font-hairline text-red-600'>No Lists Found!</h2>
-				</div>
-			</div>
-		</div>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="relative bg-gray-50 overflow-hidden">
+  <div class="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full" aria-hidden="true">
+    <div class="relative h-full max-w-7xl mx-auto">
+      <svg class="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
+        <defs>
+          <pattern id="f210dbf6-a58d-4871-961e-36d5016a0f49" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="404" height="784" fill="url(#f210dbf6-a58d-4871-961e-36d5016a0f49)" />
+      </svg>
+      <svg class="absolute left-full transform -translate-y-3/4 -translate-x-1/4 md:-translate-y-1/2 lg:-translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
+        <defs>
+          <pattern id="5d0dd344-b041-4d26-bec4-8d33ea57ec9b" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="404" height="784" fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)" />
+      </svg>
+    </div>
+  </div>
 
-		<div class='px-4 pb-6 h-page max-w-big mx-auto' v-if="lists.length">
-			<div class='flex flex-wrap-reverse'>
-				<div class='w-full md:w-7/12 md:pr-20'>
-					<div class='flex justify-between items-center mt-3'>
-						<p class='text-sm text-gray-800'>{{lists.length}} {{lists.length==1 ? 'list': 'lists'}} found</p>
-						<div class='inline-flex'>
-							<button class='px-2 border border-gray-300 border-r-0 text-gray-700 rounded rounded-r-none bg-gray-200 cursor-default' disabled>Sort By</button>
-							<select class='my-form cursor-pointer bg-gray-100 py-1 rounded-l-none' v-model="sortBy">
-								<option value="subscribers">Subscribers</option>
-								<option value="members">Members</option>
-								<option :value="null">Subscribers + Members</option>
-							</select>
-						</div>
-					</div>
-					<div v-for="l, index in sortedLists" :key='index'>
-						<div class="md:flex rounded-lg p-4 rounded border my-3 items-center" :class="[selectedLists.includes(l.link)?'bg-green-200 border-green-400 shadow':'bg-white border-gray-200', selectedLists.length>=5 && !selectedLists.includes(l.link)?'cursor-default bg-gray-200':'cursor-pointer']" @click="addRemoveList(l.link)">
-							<img class="border border-gray-400 h-10 w-10 md:h-16 md:w-16 rounded-full mx-auto md:mx-0 md:mr-6 shadow-inner" :alt="l.title" :src="l.image ? l.image : '/tw.png'">
-							<div class="text-center md:text-left">
-							  <h2 class="text-lg">{{l.title}}</h2>
-							  <div class="flex text-xs justify-center md:justify-start mt-2">
-								  <p class='inline-flex border border-gray-300 rounded'>
-									<span class='px-2 bg-gray-300'>Members</span>
-									<span class='px-1 rounded bg-white'>{{l.members || "-"}}</span>
-								  </p>
-								  <p class='inline-flex ml-3 border border-gray-300 rounded'>
-									<span class='px-2 bg-gray-300'>Subscribers</span>
-									<span class='px-1 rounded bg-white'>{{l.subscribers || "-"}}</span>
-								  </p>
-							  </div>
-							  <a class="tw-color text-xs" :href="l.link" target="_blank">{{l.link}}</a>
-							  <div class="text-gray-600 text-xs">{{l.snippet}}</div>
-							</div>
-						  </div>
-					</div>
-				</div>
-				<div class='w-full md:w-5/12 p-0 md:pr-6 my-6 md:my-0'>
-					<div class='sticky' style="top:52px;">
-					<div class='inline-flex items-stretch w-full mb-5'>
-						<input class='my-form border-gray-200 bg-white rounded-r-none w-full' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" />
-						<button class="btn rounded-l-none tw-bg" @click="findLists">Search</button>
-					</div>
-					<div class='bg-green-100 rounded shadow-2xl p-6 border border-green-400' v-if="lists.length">
-						<h1 class='text-2xl font-bold'>Download these leads</h1>
-						<h2>You can download a CSV file containing {{total.all}} potential leads. This file can be uploaded to twitter ads as a custom audience to create super targeted ads!</h2>
-						<div v-if="!selectedLists.length" class='mt-5 p-2 rounded bg-yellow-400 border border-yellow-500'>
-							You can select up to 5 lists to download.
-							<br />Click on the list to select it or un-select it.
-						</div>
-						<div v-else>
-							<download :links="selectedLists" :total="total"></download>
-						</div>
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>
+  <div class="relative pt-6 pb-16 sm:pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    </div>
+
+    <!--
+      Mobile menu, show/hide based on menu open state.
+
+      Entering: "duration-150 ease-out"
+        From: "opacity-0 scale-95"
+        To: "opacity-100 scale-100"
+      Leaving: "duration-100 ease-in"
+        From: "opacity-100 scale-100"
+        To: "opacity-0 scale-95"
+    -->
+
+
+    <main class="mt-16 mx-auto max-w-7xl px-4 sm:my-24">
+      <div class="text-center">
+        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+          <p class="block">Targeted Twitter Ads</p>
+          <p class="block text-indigo-600">Like never before</p>
+        </h1>
+        <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+			Download Twitter lists to build powerful & extremely targeted ads
+		</p>
+        <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+          <div class="rounded-md shadow">
+            <nuxt-link to="/search" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+              Get started
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+    </main>
+
+	<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:text-center">
+      <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
+      <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        A better way to do ads
+      </p>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+		  With KiteList you can find people who are already in your niche and interested on your product. The rest is easy!
+	  </p>
+    </div>
+
+    <div class="mt-10">
+      <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+              <!-- Heroicon name: globe-alt -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              Unlimited Searches
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+				Search Twitter lists without any limit. Lists are available in almost any niche
+			</dd>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+              <!-- Heroicon name: scale -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              No hidden fees
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+				Kite List adopts a pay-per-use billing system. Pay only when you find something which you want. Until then it's free!
+			</dd>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+              <!-- Heroicon name: lightning-bolt -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
+          <div class="ml-4">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              Downloads are instant
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+				Found something interesting? Download it and upload it to twitter in minutes!
+			</dd>
+          </div>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</div>
 
 	</div>
 </template>
 <script>
-import download from "~/components/download.vue"
 export default {
-	layout:'index',
-	components:{download},
-	data(){
-		return {
-			searchTerm:'',
-			sortBy: null,
-			lists:[],
-			selectedLists:[],
-			loading:false,
-			noData:false,
-			download:1,
-		}
-	},
-	methods:{
-		async findLists() {
-			this.lists = []
-			this.noData = false
-			if (!this.searchTerm){
-				return;
-			}
-			this.loading = true
-			const l = await this.$axios.$get("/api/lists", {params:{searchTerm:this.searchTerm}})
-							.finally(x => this.loading = false)
-			if (l && !l.length){
-				this.noData = true
-			}
-			this.lists = l || []
-		},
-
-		addRemoveList(link){
-			const index = this.selectedLists.indexOf(link)
-			if (index == -1){
-				if (this.selectedLists.length >= 5){return;}
-				this.selectedLists.push(link)
-			} else {
-				this.selectedLists.splice(index, 1);
-			}
-		}
-	},
-	computed:{
-		total(){
-			const selected = this.lists.filter(l => this.selectedLists.includes(l.link))
-			const t = {
-				members: selected.reduce((a, b) => a + (b['members'] || 0), 0),
-				subscribers: selected.reduce((a, b) => a + (b["subscribers"] || 0), 0)
-			}
-			t.all = t.members + t.subscribers
-			return t
-		},
-
-		sortedLists() {
-			const sortBy = this.sortBy
-			if (sortBy){
-				return this.lists.sort((a,b) => b[sortBy] - a[sortBy])
-			}
-			return this.lists.sort((a,b) => (b.subscribers + b.members) - (a.subscribers + a.members))
-		}
-
-	}
+	
 }
-
 </script>
-<style>
-</style>

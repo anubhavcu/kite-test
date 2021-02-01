@@ -1,9 +1,18 @@
-const isProd = process.env.JUMP_NODE_ENV == "prod"
-
+const isProd = process.env.NODE_ENV === "production"
+const useProxy = process.env.NODE_ENV === "development" && !process.env.NETLIFY
 export default {
-	mode: 'universal',
+	ssr: true, // Universal mode
+	target: 'static',
+	telemetry: false,
+	components: false,
+	publicRuntimeConfig: {}, // Available in the frontend
+	privateRuntimeConfig: {
+		KITELIST_BASE_URL: process.env.KITELIST_BASE_URL, //process.env.VERCEL_URL || process.env.KITELIST_BASE_URL,
+		KITELIST_SENTRY_NUXT: process.env.KITELIST_SENTRY_NUXT,
+		NODE_ENV: process.env.NODE_ENV
+	},
 	head: {
-		title: 'Jump.sh | Twitter Lists Search Engine',
+		title: 'Kite List | Twitter Lists Search Engine',
 		meta: [{
 				charset: 'utf-8'
 			},
@@ -27,24 +36,54 @@ export default {
 		color: '#fff'
 	},
 	css: ['~/assets/tailwind.css'],
-	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-analytics'],
 	modules: ['@nuxtjs/axios'],
+	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy', '@nuxtjs/google-analytics'],
 	axios: {
 		retry: { retries: 3 },
-		baseURL: process.env.API_URL
+		baseURL: process.env.KITELIST_BASE_URL
 	},
 	tailwindcss: {
 		configPath: '~/tailwind.config.js',
 		cssPath: '~/assets/tailwind.css'
 	},
-	generate: { fallback: true,  dir: 'public'},
-	build: {
-		postcss: {
-			plugins: {
-				tailwindcss: './tailwind.config.js'
+	proxy: useProxy ? ['http://localhost:3030/api'] : false,
+	sentry: {
+		dsn: isProd ? process.env.KITELIST_SENTRY_NUXT : null
+	},
+	auth: {
+		cookie: false,
+		plugins:[
+			{ src: '~/plugins/integrations.client.js', mode: 'client' },
+		],
+		strategies: {
+			local: {
+				endpoints: {
+					login: { url: '/api/auth', method: 'post', propertyName: 'token', withCredentials: false },
+					user: { url: '/api/auth', method: 'get', propertyName: false, withCredentials: true },
+					logout: false
+				}
 			}
 		},
-		extend(config, ctx) {}
-	}
+		redirect: {login: "/auth", logout: false, callback: false, home: false }
+	},
+	content: {
+		markdown: {
+		  prism: {
+			theme: 'prismjs/themes/prism-tomorrow.css'
+		  }
+		},
+		liveEdit: false
+	},
+	build: {
+		terser: {
+			terserOptions: {
+			  compress: {
+				drop_console: isProd
+			  }
+			}
+		},
+		extend(config, ctx) {			
+		}
+	},
 
 }
