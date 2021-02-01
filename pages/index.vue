@@ -107,7 +107,7 @@
               No hidden fees
             </dt>
             <dd class="mt-2 text-base text-gray-500">
-				Kite List adopts a pay-per-use billing system. Pay only when you find something which you want. Until then it's free!
+				Kite List adopts a pay-per-use billing system. Pay only when you find something you want. Until then it's free!
 			</dd>
           </div>
         </div>
