@@ -8,18 +8,25 @@
 				  <table class="table-auto border border-gray-200 rounded-lg">
 					    <thead>
 					      <tr class='bg-gray-200'>
-					        <th class="px-4 py-2 border-b border-gray-200 text-left" v-for="header in Object.keys(rows[0])">{{header}}</th>
+					        <th class="px-4 py-2 border-b border-gray-200 text-left" v-for="header in Object.keys(rows[0])" :key="header">{{header}}</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr v-for="row in rows" class="border-b border-gray-200">
-					        <td class="px-4 py-2 text-xs" v-for="val in Object.values(row)">{{val}}</td>
+					      <tr v-for="(row, inx) in rows" :key="inx" class="border-b border-gray-200">
+					        <td class="px-4 py-2 text-xs" v-for="val in Object.values(row)" :key="val">{{val}}</td>
 					      </tr>
 					  	</tbody>
 				  </table>
 			    </div>
 				<p class='text-center text-sm italic text-gray-700'> ... Usually exports have thousands rows!</p>
 		  </div>
+		
+			<div class='mt-6'>
+				You can upload our exports directly to Twitter following the official guide: <br>
+				<a class='mt-2 block text-indigo-400' target="_blank" href="https://business.twitter.com/en/help/campaign-setup/campaign-targeting/custom-audiences/lists.html">
+					https://business.twitter.com/en/help/campaign-setup/campaign-targeting/custom-audiences/lists.html
+				</a>
+			</div>
 	  </div>
   </div>
 </template>

@@ -35,6 +35,8 @@ export default {
 				product:577736,
 				allowQuantity: false,
 				disableLogout: true,
+				title: 'KiteList Pro Subscription',
+				message: 'Get access to unlimited downloads',
 				successCallback: function(paddleData) {
 					vm.saveUser(paddleData)
 				}

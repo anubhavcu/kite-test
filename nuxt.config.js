@@ -36,8 +36,9 @@ export default {
 		color: '#fff'
 	},
 	css: ['~/assets/tailwind.css'],
-	modules: ['@nuxtjs/axios'],
+	modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
 	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy', '@nuxtjs/google-analytics'],
+	plugins:[{ src: '~/plugins/shared.js'}],
 	axios: {
 		retry: { retries: 3 },
 		baseURL: process.env.KITELIST_BASE_URL
@@ -52,9 +53,6 @@ export default {
 	},
 	auth: {
 		cookie: false,
-		plugins:[
-			{ src: '~/plugins/integrations.client.js', mode: 'client' },
-		],
 		strategies: {
 			local: {
 				endpoints: {

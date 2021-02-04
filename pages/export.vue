@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import download from "~/components/download.vue"
+// import download from "~/components/download.vue"
 export default {
 	layout:'index',
 	data(){
@@ -25,7 +25,7 @@ export default {
 			submittedLinks:''
 		}
 	},
-	components: {download},
+	// components: {download},
 	computed:{
 		allLinks(){
 			const rows = this.submittedLinks.split("\n") || []
