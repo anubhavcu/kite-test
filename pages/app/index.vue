@@ -11,7 +11,7 @@
 				</li>
 			</ul>
 
-			<div class='bg-white p-5 border-t border-gray-50'>
+			<div class='bg-white p-5 border-t border-gray-50 min-h-70vh'>
 				<div v-show="!tabIndex" class='leading-8'>
 					<p class='text-2xl font-bold'> Welcome to KiteList! </p>
 					<p>

@@ -23,6 +23,10 @@
 	min-height: calc(100vh - 2.5rem);
 }
 
+.min-h-70vh{
+	min-height: 70vh;
+}
+
 .tw-bg{
 	background: #1da1f2;
 }

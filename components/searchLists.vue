@@ -4,7 +4,7 @@
 			<div>
 				<div class='pb-3 m-4' v-show="!loading">
 					<div class='inline-flex items-stretch w-full rounded overflow-hidden'>
-						<input class='my-form bg-white border-gray-50 rounded-r-none w-full' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" />
+						<input class='my-form border-gray-400 border-r-0 rounded-r-none w-full placeholder-gray-700' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" />
 						<button class="btn rounded-l-none tw-bg sm:px-20" @click="findLists">Search</button>
 					</div>
 				</div>
@@ -46,6 +46,11 @@
 							<li v-for="list in selectedLists" :key="list" class='text-xs'>{{list}}</li>
 						</ul>
 						<button @click="exportLists" class='rounded bg-green-500 text-white font-semibold px-3 py-2 w-full shadow-lg mt-5 mb-3'>Export</button>
+					</div>
+				</div>
+				<div v-show="!selectedLists.length">
+					<div class='border-4 border-dashed border-gray-500 p-6 rounded-lg sm:mt-10 text-gray-500 text-xl text-center'>
+						Select lists by clicking on them!
 					</div>
 				</div>
 			</div>

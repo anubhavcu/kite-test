@@ -21,7 +21,7 @@
 								</svg>
 							</button>
 							<div>
-								<nuxt-link to="/" @click="openSidebar=false" class="ml-4 cursor-pointer font-bold text-2xl text-black">KiteList</nuxt-link>
+								<nuxt-link to="/" @click="openSidebar=false" class="ml-4 cursor-pointer font-bold text-2xl text-black">Kite List</nuxt-link>
 							</div>			
 						</div>
 
