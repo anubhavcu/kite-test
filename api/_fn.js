@@ -159,13 +159,13 @@ const fn = module.exports = {
 
 	async get_id(collection_name, id) {
 		// Returns the object without ID if it can't find it returns null
-		const cache_id = `${collection_name}-${id}`
-		const cached = false// myCache.get( cache_id )
-		if (cached){
-			console.log("mem cache")
-			return cached
-		}
-		console.log("FROM db...", `${collection_name}-${id}`)
+		// const cache_id = `${collection_name}-${id}`
+		// const cached = false// myCache.get( cache_id )
+		// if (cached){
+		// 	console.log("mem cache")
+		// 	return cached
+		// }
+		// console.log("FROM db...", `${collection_name}-${id}`)
 		const db = fn.connectToDatabase()
 		const item = await db.collection(collection_name).doc(id).get()
 			.then(v =>  v.data() || null)

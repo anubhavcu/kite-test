@@ -49,17 +49,6 @@ app.addHook('onSend', async (request, reply, payload) => {
 	return payload
 })
 
-// Check for allowed host
-if (isProd){
-	app.addHook('onRequest', async (request, reply) => {
-		// Allow some routes to accept for example Paddle WebHooks
-		if (request.headers.host !== "kitelist.com" || !request.headers["x-vercel-id"]) {
-			throw new Error("401::Not Allowed")
-		}
-	})
-}
-
-
 
 // Error Handler
 app.setErrorHandler(async (error, req, reply) => {
@@ -191,8 +180,6 @@ app.route({
 		const search_term = request.params.search_term.toLowerCase()
 		const query = `site:https://twitter.com/i/lists/ OR site:twitter.com/*/lists ${search_term}`
 		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX,q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
-		
-		console.log("params are: ", params)
 		const cache = await fn.get_id("cached_searches", search_term)
 		if (cache){
 			console.log("returning cached ")
@@ -203,7 +190,7 @@ app.route({
 		const pages = [1,11,21,31,41]
 		for (let page of pages) {
 			params['start'] = page
-			console.log(`Getting pages starting from index ${page}`)
+			// console.log(`Getting pages starting from index ${page}`)
 			const pageLists = await axios.get("https://www.googleapis.com/customsearch/v1/siterestrict", {params:params})
 			.then(r => {return r.data.items || false})
 			.catch(e => {console.log(e); return false} )
@@ -320,7 +307,6 @@ app.route({
 				if (url.includes("https://twitter.com/i/lists/")){
 					url = url.replace("https://twitter.com/i/lists/", "")
 					url = url.split("?")
-					console.log(url)
 					payload.list_id = url[0]
 				}
 				else {
@@ -334,7 +320,6 @@ app.route({
 						payload.slug = slug
 					}
 				}
-				console.log(payload)
 				apiCalls.push(axios.get(endpoint, {params:payload, headers:headers}).then(r => r.data)
 				.catch(e => {
 					if (e.response && e.response.data && e.response.data.errors) {
