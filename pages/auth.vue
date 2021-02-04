@@ -34,12 +34,12 @@
 				</div>
 
 				<div v-show="loginStep==2">
-					<div class='text-gray-600'>
+					<div class='text-green-600'>
 						<svg class='w-24 h-24 fill-current' viewBox="0 0 24 24">
 							<path d="M13 17H17V14L22 18.5L17 23V20H13V17M20 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H11V18H4V8L12 13L20 8V14H22V6A2 2 0 0 0 20 4M12 11L4 6H20Z" />
 						</svg>
-						<h2 class="text-4xl font-bold text-gray-600"> Email sent! </h2>
-						<h3 class="text-xl mt-3 text-gray-500"> Click on the link in your <span class='text-emerald-500 font-semibold tracking-wide'>{{email}}</span> inbox to login.</h3>
+						<h2 class="text-4xl font-bold text-green-600"> Email sent! </h2>
+						<h3 class="text-xl mt-3 text-green-500"> Click on the link in your <span class='text-emerald-500 font-semibold tracking-wide'>{{email}}</span> inbox to login.</h3>
 					</div>
 				</div>
 

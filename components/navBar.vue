@@ -32,9 +32,9 @@
 									<nuxt-link to="/support" class='font-medium mb-4 md:mb-0 block md:inline-flex'>Support</nuxt-link>
 									<!-- NOT LOGGED IN -->
 									<nuxt-link v-show="!$auth.loggedIn" to="/pro" class='font-medium mb-4 md:mb-0 md:ml-5 block md:inline-flex'>Pro</nuxt-link>
-									<nuxt-link v-show="!$auth.loggedIn" to="/auth" class='btn bg-green-500 md:ml-5'>Login</nuxt-link>
+									<nuxt-link v-show="!$auth.loggedIn" to="/auth" class='btn py-2 bg-green-500 md:ml-5'>Login</nuxt-link>
 									<!-- LOGIN REQUIRED -->
-									<nuxt-link v-show="$auth.loggedIn" to="/auth?logout=true" class="btn bg-red-700 mb-4 md:mb-0 md:ml-5 w-auto block md:inline-flex">
+									<nuxt-link v-show="$auth.loggedIn" to="/auth?logout=true" class="btn py-2 bg-red-700 mb-4 md:mb-0 md:ml-5 w-auto block md:inline-flex">
 										<span>Logout</span>
 									</nuxt-link>
 

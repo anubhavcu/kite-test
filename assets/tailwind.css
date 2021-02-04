@@ -72,4 +72,43 @@
     100%{left: 1px;}
 }
 
+
+.disabled{
+	@apply cursor-not-allowed pointer-events-none select-none bg-opacity-75;
+}
+
+.loading {
+	color: transparent !important;
+	pointer-events: none;
+	position: relative;
+	&:after {
+	  animation: spinAround 500ms infinite linear;
+	  border: 2px solid #dbdbdb;
+	  border-radius: 290486px;
+	  border-right-color: transparent;
+	  border-top-color: transparent;
+	  content: '';
+	  display: block;
+	  width: 1em;
+	  height: 1em;
+	  left: calc(50% - (1em / 2));
+	  top: calc(50% - (1em / 2));
+	  position: absolute !important;
+	}
+  }
+  
+  .loading-spinner {
+	&:after {
+	  animation: spinAround 500ms infinite linear;
+	  border: 2px solid #dbdbdb;
+	  border-radius: 290486px;
+	  border-right-color: transparent;
+	  border-top-color: transparent;
+	  content: '';
+	  display: inline-flex;
+	  width: 1em;
+	  height: 1em;
+	}
+  }
+
 @tailwind utilities;
