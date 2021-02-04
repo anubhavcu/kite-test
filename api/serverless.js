@@ -49,6 +49,18 @@ app.addHook('onSend', async (request, reply, payload) => {
 	return payload
 })
 
+// Check for allowed host
+if (isProd){
+	app.addHook('onRequest', async (request, reply) => {
+		// Allow some routes to accept for example Paddle WebHooks
+		if (request.headers.host !== "kitelist.com" || !request.headers["x-vercel-id"]) {
+			throw new Error("401::Not Allowed")
+		}
+	})
+}
+
+
+
 // Error Handler
 app.setErrorHandler(async (error, req, reply) => {
 	if (error.validation){
@@ -179,7 +191,8 @@ app.route({
 		const search_term = request.params.search_term.toLowerCase()
 		const query = `site:https://twitter.com/i/lists/ OR site:twitter.com/*/lists ${search_term}`
 		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX,q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
-	
+		
+		console.log("params are: ", params)
 		const cache = await fn.get_id("cached_searches", search_term)
 		if (cache){
 			console.log("returning cached ")
