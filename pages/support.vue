@@ -24,7 +24,7 @@
             Is this really effective?
           </dt>
           <dd class="mt-2 text-base text-gray-500">
-			  Behavioural advertising has been proven to be extremely effective. It's obviously much easier to sell something to someone already interested on your product.
+			  Behavioral advertising has been proven to be extremely effective. It's obviously much easier to sell something to someone already interested on your product.
 		   </dd>
         </div>
 
@@ -57,7 +57,7 @@
 
         <div>
           <dt class="text-lg leading-6 font-medium text-gray-900">
-            I have an other question, how can I reach out?
+            I have another question, how can I reach out?
           </dt>
           <dd class="mt-2 text-base text-gray-500">
 			  Please email us at team@kitelist.com or use the contact form below
