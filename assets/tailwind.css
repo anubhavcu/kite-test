@@ -2,7 +2,7 @@
 @tailwind components;
 
 .my-form{
-	@apply appearance-none py-3 px-4 bg-gray-50 border border-gray-200 text-base text-gray-700 rounded leading-tight ;
+	@apply appearance-none py-3 px-4 bg-gray-50 border border-gray-200 text-base text-gray-700 rounded;
 }
 .btn {
 	@apply appearance-none cursor-pointer py-3 px-4 bg-black text-base text-white rounded leading-tight;
@@ -36,6 +36,10 @@
 
 .max-w-big{
 	max-width: 100rem;
+}
+
+.nuxt-link-exact-active{
+	@apply text-pink-600 cursor-auto;
 }
 
 ./*eye ball LOADER*/
