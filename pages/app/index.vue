@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class='bg-blue-800 w-screen h-20'></div>
+		<div class='bg-blue-800 w-screen h-20 shadow-inner'></div>
 			<div class='p-5 max-w-6xl mx-auto'>
 		<div class='rounded shadow-xl overflow-hidden -mt-16'>
 			<ul class="inline-flex items-center justify-start bg-gray-100 w-full rounded-t">
@@ -8,7 +8,7 @@
 					v-for="(tab, index) in tabs" :key="tab"
 					@click="tabIndex=index"
 					:class="tabIndex===index ? 'border-blue-800 text-blue-800' : 'text-gray-700 border-transparent cursor-pointer' "
-					class='border-b-4 mx-3 py-2 font-medium'> 
+					class='border-b-4 mx-3 py-2 font-medium text-xs sm:text-base'> 
 					{{tab}}
 				</li>
 			</ul>

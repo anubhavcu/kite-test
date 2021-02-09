@@ -2,10 +2,10 @@
 	<div class='pb-12'>
 		<div class='bg-black opacity-70 block md:hidden h-screen w-screen z-10 fixed' @click="openSidebar=false" v-show="openSidebar"></div>
 			<div>
-				<div class="fixed top-0 left-0 w-full z-20" id='nav-wrapper' >		
+				<div class="fixed top-0 left-0 w-full z-20 border-b-2 border-blue-900 shadow-lg" id='nav-wrapper' >		
 					<div id='nav-bar' 
 						class="contain-width flex flex-wrap md:flex-nowrap justify-between items-center bg-gray-100 border-b border-warm-gray-300 text-gray-600 shadow-sm"
-						:class="openSidebar ? 'h-auto md:h-14' : 'h-12'"	
+						:class="openSidebar ? 'h-auto md:h-14 pb-6 md:pb-0' : 'h-12'"	
 						>
 						<div class='inline-flex items-center w-auto h-12' id="nav-start">
 							<button

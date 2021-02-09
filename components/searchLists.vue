@@ -2,10 +2,10 @@
 	<div>
 		<div class="items-center justify-center">
 			<div>
-				<div class='pb-3 m-4' v-show="!lists_loading">
-					<div class='inline-flex items-stretch w-full rounded overflow-hidden'>
-						<input class='my-form bg-gray-50 border-gray-200 border-r-0 rounded-r-none w-full placeholder-gray-400' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" @input="resetLists" />
-						<button class="btn rounded-l-none tw-bg sm:px-20" @click="findLists">Search</button>
+				<div class='pb-3 my-4' v-show="!lists_loading">
+					<div class='grid grid-cols-1 sm:grid-cols-3 items-stretch sm:items-center w-full rounded overflow-hidden gap-y-3'>
+						<input class='h-12 text-sm sm:text-base sm:col-span-2 my-form bg-gray-50 border-gray-200 sm:border-r-0 sm:rounded-r-none w-full placeholder-gray-400' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" @input="resetLists" />
+						<button class="h-12 btn sm:rounded-l-none tw-bg sm:px-20" @click="findLists">Search</button>
 					</div>
 				</div>
 				<div v-show="lists_loading" class='my-5'>
@@ -49,7 +49,7 @@
 					</div>
 				</div>
 				<div v-show="!selected_lists.length">
-					<div class='border-4 border-dashed border-gray-500 p-6 rounded-lg sm:mt-10 text-gray-500 text-xl text-center'>
+					<div class='border-4 border-dashed border-gray-300 p-6 rounded-lg sm:mt-10 text-gray-300 text-xl text-center'>
 						Select lists by clicking on them!
 					</div>
 				</div>
