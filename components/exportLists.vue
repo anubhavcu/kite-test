@@ -35,7 +35,7 @@
 			<div>
 				<button class='rounded shadow border border-teal-600 text-lg font-bold uppercase bg-green-600 text-white text-center w-full py-3 px-3' @click=download>Download</button>
 				<p class='text-sm text-center text-gray-800 mt-2' v-show="!$auth.loggedIn">
-					Not happy with the results? We refund you immediately<span @click="downloadLeads">!</span>
+					Not happy with the results? We refund you immediately!
 				</p>				
 			</div>
 		</div>
@@ -48,8 +48,6 @@
 </div>
 </template>
 <script>
-import Papa from 'papaparse'
-import saveAs from 'file-saver'
 export default {
 	data(){
 		return {
