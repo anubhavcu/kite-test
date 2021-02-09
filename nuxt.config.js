@@ -39,7 +39,7 @@ export default {
 			{ 
 				hid: 'og:image', 
 				property: 'og:image', 
-				content: `${process.env.KITELIST_BASE_URL}/banner.png`
+				content: `${process.env.KITELIST_BASE_URL}/kitelist.png`
 			}
 		],
 		link: [
