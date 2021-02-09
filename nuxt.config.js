@@ -13,7 +13,8 @@ export default {
 	},
 	head: {
 		title: 'Kite List | Twitter Lists Search Engine',
-		meta: [{
+		meta: [
+			{
 				charset: 'utf-8'
 			},
 			{
@@ -24,6 +25,11 @@ export default {
 				hid: 'description',
 				name: 'description',
 				content: 'Find Twitter lists in your niche, explore the data and download all the subscribers and members'
+			},
+			{ 
+				hid: 'og:image', 
+				property: 'og:image', 
+				content: "/banner.png"
 			}
 		],
 		link: [
