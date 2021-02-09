@@ -1,7 +1,0 @@
-<script>
-	// CUSTOM REDIRECT BECAUSE LINKS ARE WRONG ON THE APPSUMO OFFER PAGE
-	const urlParams = new URLSearchParams(window.location.search);
-	const term = urlParams.get('query')
-	const url = window.location.origin + "/app" + (term ? `?search=${term}` : '')
-	window.location.href = url
-</script>
