@@ -22,7 +22,7 @@
 				<div class='col-span-1 sm:col-span-2'>
 					<div class='flex justify-between items-center'>
 						<p class='text-sm text-gray-800'>{{lists.length}} {{lists.length==1 ? 'list': 'lists'}} found</p>
-						<button class='rounded-2xl py-1 px-3 bg-green-500 text-white text-xs font-semibold shadow' @click="openAll">Open All</button>
+						<!-- <button class='rounded-2xl py-1 px-3 bg-green-500 text-white text-xs font-semibold shadow' @click="openAll">Open All</button> -->
 					</div>
 					<div>
 						<div v-for="(l, index) in lists" :key='index'>
