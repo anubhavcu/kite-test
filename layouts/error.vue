@@ -11,7 +11,6 @@
 			<h3 class="my-3">{{error.message}}</h3>
 
 			<a class='btn btn-blue block mb-2' href="/">Back to the homepage</a>
-			<a class="btn btn-red block" @click='openChat()'>Ask for help via Chat</a>
 		</div>
 	</client-only>
 </div>
@@ -19,14 +18,7 @@
 <script>
 export default {
 	props: ['error'],
-	mounted() {
-		localStorage.clear();
-	},
 	methods: {
-		openChat() {
-			const msg = `Hello, I got an error. My current url is: ${window.location.href}. Can you help?`
-			convertfox.chat('openNewConversation', msg)
-		}
 	}
 }
 </script>

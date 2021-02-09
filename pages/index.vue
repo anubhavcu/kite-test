@@ -1,141 +1,67 @@
 <template>
 	<div>
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative bg-gray-50 overflow-hidden">
-  <div class="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full" aria-hidden="true">
-    <div class="relative h-full max-w-7xl mx-auto">
-      <svg class="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
-        <defs>
-          <pattern id="f210dbf6-a58d-4871-961e-36d5016a0f49" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-            <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
-          </pattern>
-        </defs>
-        <rect width="404" height="784" fill="url(#f210dbf6-a58d-4871-961e-36d5016a0f49)" />
-      </svg>
-      <svg class="absolute left-full transform -translate-y-3/4 -translate-x-1/4 md:-translate-y-1/2 lg:-translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
-        <defs>
-          <pattern id="5d0dd344-b041-4d26-bec4-8d33ea57ec9b" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-            <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
-          </pattern>
-        </defs>
-        <rect width="404" height="784" fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)" />
-      </svg>
-    </div>
+<div class="relative bg-white overflow-hidden">
+  <div class="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
+    <svg class="absolute top-0 left-1/2 transform translate-x-64 -translate-y-8" width="640" height="784" fill="none" viewBox="0 0 640 784">
+      <defs>
+        <pattern id="9ebea6f4-a1f5-4d96-8c4e-4c2abf658047" x="118" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+        </pattern>
+      </defs>
+      <rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
+      <rect x="118" width="404" height="784" fill="url(#9ebea6f4-a1f5-4d96-8c4e-4c2abf658047)" />
+    </svg>
   </div>
+  <div class="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
 
-  <div class="relative pt-6 pb-16 sm:pb-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-    </div>
-
-    <!--
-      Mobile menu, show/hide based on menu open state.
-
-      Entering: "duration-150 ease-out"
-        From: "opacity-0 scale-95"
-        To: "opacity-100 scale-100"
-      Leaving: "duration-100 ease-in"
-        From: "opacity-100 scale-100"
-        To: "opacity-0 scale-95"
-    -->
-
-
-    <main class="mt-16 mx-auto max-w-7xl px-4 sm:my-24">
-      <div class="text-center">
-        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-          <p class="block">Targeted Twitter Ads</p>
-          <p class="block text-indigo-600">Like never before</p>
-        </h1>
-        <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-			Download Twitter lists to build powerful & extremely targeted ads
-		</p>
-        <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-          <div class="rounded-md shadow">
-            <nuxt-link to="/app" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-              Get started
-            </nuxt-link>
+    <main class="mt-12 mx-auto max-w-7xl px-4 sm:mt-16 sm:px-6 lg:mt-20">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+          <h1>
+            <span class="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">Increase your ROI by 10X</span>
+            <span class="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
+              <span class="block text-gray-900">Make Super Targeted</span>
+              <span class="block text-blue-800">Twitter Ads</span>
+            </span>
+          </h1>
+          <div class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+			  <p>Kitelist allows you target Twitter Ads to any subscriber of public Twitter lists.</p>
+			  <p class="mt-4">We have a database of over <span class='text-pink-600 font-black'>10.000</span> Twitter lists in any niche or market. <b class="font-bold text-pink-600">You can target them all!</b></p>
+		  </div>
+          <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+            <p class="text-base font-medium text-gray-900">
+				Start by searching your niche:
+            </p>
+            <form @submit.prevent="search" class="mt-3 sm:flex" autocomplete="off">
+              <label for="search" class="sr-only">search</label>
+              <input type="text" name="search" id="search" class="my-form shadow-md" placeholder="Enter your search term" v-model='search_term'>
+              <button type="submit" class="btn bg-blue-900 ml-4 text-white">
+                Search
+              </button>
+            </form>
+            <div class="mt-3 text-sm flex flex-wrap">
+              <p class='text-gray-500 mr-2'>For Example:</p>
+              <nuxt-link class='mr-2 underline text-blue-800' :to="`/app?search=${ex}`" v-for="ex in ['Marketing', 'Forex', 'Wedding', 'Real Estate', 'Bitcoin']" :key="ex">{{ex}}</nuxt-link>
+            </div>
           </div>
+        </div>
+        <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+          <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden" width="640" height="784" fill="none" viewBox="0 0 640 784" aria-hidden="true">
+            <defs>
+              <pattern id="4f4f415c-a0e9-44c2-9601-6ded5a34a13e" x="118" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
+            <rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
+          </svg>
+					<video height="340" controls controlsList="nodownload" class='relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md ring-0 focus:ring-0 focus:outline-none'>
+					<source src="https://media.publit.io/file/h_720/KiteList/kitelist.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
         </div>
       </div>
     </main>
-
-	<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="py-12 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="lg:text-center">
-      <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-      <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-        A better way to do ads
-      </p>
-      <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-		  With KiteList you can find people who are already in your niche and interested on your product. The rest is easy!
-	  </p>
-    </div>
-
-    <div class="mt-10">
-      <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-              <!-- Heroicon name: globe-alt -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-              </svg>
-            </div>
-          </div>
-          <div class="ml-4">
-            <dt class="text-lg leading-6 font-medium text-gray-900">
-              Unlimited Searches
-            </dt>
-            <dd class="mt-2 text-base text-gray-500">
-				Search Twitter lists without any limit. Lists are available in almost any niche
-			</dd>
-          </div>
-        </div>
-
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-              <!-- Heroicon name: scale -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-              </svg>
-            </div>
-          </div>
-          <div class="ml-4">
-            <dt class="text-lg leading-6 font-medium text-gray-900">
-              No hidden fees
-            </dt>
-            <dd class="mt-2 text-base text-gray-500">
-				Kite List adopts a pay-per-use billing system. Pay only when you find something you want. Until then it's free!
-			</dd>
-          </div>
-        </div>
-
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-              <!-- Heroicon name: lightning-bolt -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-          </div>
-          <div class="ml-4">
-            <dt class="text-lg leading-6 font-medium text-gray-900">
-              Downloads are instant
-            </dt>
-            <dd class="mt-2 text-base text-gray-500">
-				Found something interesting? Download it and upload it to twitter in minutes!
-			</dd>
-          </div>
-        </div>
-      </dl>
-    </div>
-  </div>
-</div>
-
-
   </div>
 </div>
 
@@ -143,6 +69,16 @@
 </template>
 <script>
 export default {
-	
+	data(){
+		return {
+			search_term:""
+		}
+	},
+	methods:{
+		search(){
+			const query = this.search_term.length ? {search:this.search_term} : {}
+			this.$router.push({name:'app', query:query})
+		}
+	}
 }
 </script>

@@ -219,7 +219,15 @@ app.route({
 	url:"/api/host",
 	method: ["GET"],
 	handler: async (request, reply) => {
-		return request.headers.host || "No host"
+		console.logdod
+		return d// request.headers.host || "No host"
+	}
+})
+app.route({
+	url:"/api/host2",
+	method: ["GET"],
+	handler: async (request, reply) => {
+		throw new Error("400::You cnat")
 	}
 })
 
