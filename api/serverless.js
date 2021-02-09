@@ -283,11 +283,14 @@ app.route({
 		const {download, links} = request.body
 		const urls = links.map(link => link.toLowerCase() )
 		let apiData = []
-		let endpoints = ["https://api.twitter.com/1.1/lists/subscribers.json", "https://api.twitter.com/1.1/lists/members.json"]
+		let endpoints = [
+			{type:"subscriber", url:"https://api.twitter.com/1.1/lists/subscribers.json"}, 
+			{type:"member", url:"https://api.twitter.com/1.1/lists/members.json"}
+		]
 		if (download !== 2) { endpoints = [endpoints[download]] }
-		for (const [index, endpoint] of endpoints.entries()) {
-			const type = ['subscriber', 'member'][index]
-			const headers = {"Authorization": "Bearer "+process.env.KITELIST_TWITTER_API_KEY }
+		for (const endpoint of endpoints) {
+			const type = endpoint.type
+			const headers = {"Authorization": `Bearer ${process.env.KITELIST_TWITTER_API_KEY}` }
 			const apiCalls = []
 
 			for (let url of urls) {
@@ -310,7 +313,7 @@ app.route({
 						payload.slug = slug
 					}
 				}
-				apiCalls.push(axios.get(endpoint, {params:payload, headers:headers}).then(r => r.data)
+				apiCalls.push(axios.get(endpoint.url, {params:payload, headers:headers}).then(r => r.data)
 				.catch(e => {
 					if (e.response && e.response.data && e.response.data.errors) {
 						console.error(`Twitter list errors: ${JSON.stringify(e.response.data.errors)}`)
