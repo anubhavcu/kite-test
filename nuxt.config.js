@@ -54,7 +54,10 @@ export default {
 	css: ['~/assets/tailwind.css'],
 	modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
 	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy', '@nuxtjs/google-analytics'],
-	plugins:[{ src: '~/plugins/shared.js'}],
+	plugins:[
+		{ src: '~/plugins/shared.js'},
+		{ src: '~/plugins/ga.client.js', mode:'client'}
+	],
 	axios: {
 		retry: { retries: 3 },
 		baseURL: process.env.KITELIST_BASE_URL
