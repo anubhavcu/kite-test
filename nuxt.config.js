@@ -12,7 +12,7 @@ export default {
 		NODE_ENV: process.env.NODE_ENV
 	},
 	head: {
-		title: 'Kite List | Twitter Lists Search Engine',
+		title: 'Kite List | Twitter Lists Search Engine & Exporter',
 		meta: [
 			{
 				charset: 'utf-8'
@@ -22,6 +22,16 @@ export default {
 				content: 'width=device-width, initial-scale=1'
 			},
 			{
+				hid: 'og:title',
+				name: 'og:title',
+				content: 'Kite List | Twitter Lists Search Engine & Exporter'
+			},
+			{
+				hid: 'og:description',
+				name: 'og:description',
+				content: 'Find Twitter lists in your niche, explore the data and download all the subscribers and members'
+			},
+			{
 				hid: 'description',
 				name: 'description',
 				content: 'Find Twitter lists in your niche, explore the data and download all the subscribers and members'
@@ -29,7 +39,7 @@ export default {
 			{ 
 				hid: 'og:image', 
 				property: 'og:image', 
-				content: "/banner.png"
+				content: `${process.env.KITELIST_BASE_URL}/banner.png`
 			}
 		],
 		link: [
