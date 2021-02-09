@@ -29,16 +29,16 @@
 			  <p class="mt-4">We have a database of over <span class='text-pink-600 font-black'>10.000</span> Twitter lists in any niche or market. <b class="font-bold text-pink-600">You can target them all!</b></p>
 		  </div>
           <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-            <p class="text-base font-medium text-gray-900">
-				Start by searching your niche:
-            </p>
-            <form @submit.prevent="search" class="mt-3 sm:flex" autocomplete="off">
-              <label for="search" class="sr-only">search</label>
-              <input type="text" name="search" id="search" class="my-form shadow-md" placeholder="Enter your search term" v-model='search_term'>
-              <button type="submit" class="btn bg-blue-900 ml-4 text-white">
-                Search
-              </button>
-            </form>
+            <p class="text-base font-medium text-gray-900"> Start by searching your niche: </p>
+			<form class="grid sm:grid-cols-3 gap-3 mt-1 mb-4" @submit.prevent="search">
+				<input class='my-form sm:col-span-2' placeholder="Search for your niche" v-model='search_term'>
+				<button type="submit" class="btn bg-blue-900 text-white inline-flex items-center justify-center">
+					<svg class='h-5 w-5 mr-2 fill-current' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+					</svg>
+					Search
+				</button>
+			</form>
             <div class="mt-3 text-sm flex flex-wrap">
               <p class='text-gray-500 mr-2'>For Example:</p>
               <nuxt-link class='mr-2 underline text-blue-800' :to="`/app?search=${ex}`" v-for="ex in ['Marketing', 'Forex', 'Wedding', 'Real Estate', 'Bitcoin']" :key="ex">{{ex}}</nuxt-link>
