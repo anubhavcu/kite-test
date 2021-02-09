@@ -2,7 +2,7 @@
 @tailwind components;
 
 .my-form{
-	@apply appearance-none py-3 px-4 bg-gray-200 border border-gray-300 text-base text-gray-700 rounded leading-tight;
+	@apply appearance-none py-3 px-4 bg-gray-50 border border-gray-200 text-base text-gray-700 rounded leading-tight ;
 }
 .btn {
 	@apply appearance-none cursor-pointer py-3 px-4 bg-black text-base text-white rounded leading-tight;

@@ -3,7 +3,7 @@
 export const state = () => {
 	return {
 		lists_loading:false,
-		lists:[],
+		lists:null, // Or Array
 		selected_lists:[],
 		tabIndex:0,
 		search_term:''

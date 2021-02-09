@@ -1,5 +1,5 @@
 <template>
-  <div class='h-auto bg-gray-200 max-w-big border-l border-r border-gray-200 mx-auto min-h-screen'>
+  <div class='h-auto bg-gray-100 mx-auto min-h-screen'>
 	<navBar></navBar>
 	<main>
 		<nuxt />

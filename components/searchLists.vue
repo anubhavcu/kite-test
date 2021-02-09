@@ -4,20 +4,20 @@
 			<div>
 				<div class='pb-3 m-4' v-show="!lists_loading">
 					<div class='inline-flex items-stretch w-full rounded overflow-hidden'>
-						<input class='my-form border-gray-400 border-r-0 rounded-r-none w-full placeholder-gray-700' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" />
+						<input class='my-form bg-gray-50 border-gray-200 border-r-0 rounded-r-none w-full placeholder-gray-400' placeholder="Digital Marketing" v-model="searchTerm" @keyup.enter="findLists" @input="resetLists" />
 						<button class="btn rounded-l-none tw-bg sm:px-20" @click="findLists">Search</button>
 					</div>
 				</div>
 				<div v-show="lists_loading" class='my-5'>
 					<h2 class='text-4xl font-bold text-pink-600'>Loading lists...</h2>
 				</div>
-				<div v-show="!lists.length && !lists_loading">
+				<div v-show="lists && !lists.length && !lists_loading">
 					<h2 class='text-4xl font-bold text-red-600'>No Lists Found!</h2>
 				</div>
 			</div>
 		</div>
 
-		<div class='px-4 py-6 h-page max-w-big mx-auto border-t border-gray-200' v-show="!lists_loading">
+		<div class='px-4 py-6 h-page max-w-big mx-auto border-t border-gray-200' v-if="!lists_loading && lists && lists.length">
 			<div class='grid grid-cols-1 sm:grid-cols-3 gap-10'>
 				<div class='col-span-1 sm:col-span-2'>
 					<div class='flex justify-between items-center'>
@@ -91,6 +91,9 @@ export default {
 				selected_clone.splice(index, 1);
 			}
 			this.$store.commit("UPDATE_STORE", {selected_lists:selected_clone})
+		},
+		resetLists(){
+			this.$store.commit("UPDATE_STORE", {lists:null})
 		}
 	},
 	computed:{

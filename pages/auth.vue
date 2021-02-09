@@ -26,7 +26,7 @@
 						</div>
 						<button
 							type="submit"
-							class="shadow-lg w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-orange-500 hover:bg-orange-400 focus:outline-none focus:bg-emerald-400 transition duration-150 ease-in-out">
+							class="shadow-lg w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-800 focus:outline-none focus:bg-emerald-400 transition duration-150 ease-in-out">
 							Send Magic Link
 						</button>
 					</form>

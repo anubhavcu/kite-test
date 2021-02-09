@@ -12,7 +12,7 @@
 				<input type="hidden" name="subject" value="kitelist Support Email" />
 				<input type="hidden" name="replyTo" value="@">
 				<input type="hidden" name="redirectTo" value="https://kitelist.com/support?sent=true">
-				<input type="submit" value="Submit" class='btn bg-blue-600 text-white uppercase w-full block text-center font-semibold mt-6' />
+				<input type="submit" value="Submit" class='btn bg-blue-800 text-white uppercase w-full block text-center font-semibold mt-6' />
 			</form>
 	  </div>
   </div>
