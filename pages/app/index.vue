@@ -60,6 +60,13 @@ export default {
 			tabs:["Welcome", "Search Lists", "Export Lists"]
 		}
 	},
+	async mounted(){
+		const {search} = this.$route.query
+		if (search){
+			this.$store.commit("UPDATE_STORE", {search_term:search, tabIndex:1})
+			await this.$store.dispatch("search_lists")
+		}
+	},
 	computed:{
 		tabIndex:{
 			get(){

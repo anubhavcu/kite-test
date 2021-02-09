@@ -19,23 +19,26 @@
 		"go-live": "npx localtunnel --port 3000 --subdomain kitelist"
 	},
 	"dependencies": {
-		"@google-cloud/firestore": "^4.9.1",
-		"@google-cloud/storage": "^5.7.3",
+		"@google-cloud/firestore": "^4.9.2",
+		"@google-cloud/storage": "^5.7.4",
 		"@nuxtjs/auth": "^4.9.1",
-		"@nuxtjs/axios": "^5.3.6",
+		"@nuxtjs/axios": "^5.13.1",
 		"@nuxtjs/content": "^0.3.0",
+		"autoprefixer": "^9.8.6",
 		"file-saver": "^2.0.2",
 		"node-cache": "^5.0.2",
 		"node-html-parser": "^2.1.0",
 		"nuxt": "^2.10.2",
-		"papaparse": "^5.1.0"
+		"papaparse": "^5.1.0",
+		"postcss": "^7.0.35",
+		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
 	},
 	"devDependencies": {
 		"@nuxtjs/google-analytics": "^2.2.2",
 		"@nuxtjs/proxy": "^2.1.0",
-		"@nuxtjs/sentry": "^5.0.0",
+		"@nuxtjs/sentry": "^5.0.1",
 		"@nuxtjs/tailwindcss": "^3.4.2",
-		"@sentry/node": "^6.0.3",
+		"@sentry/node": "^6.1.0",
 		"aws-lambda-fastify": "^1.4.4",
 		"fastify": "^3.11.0",
 		"fastify-formbody": "^5.0.0",

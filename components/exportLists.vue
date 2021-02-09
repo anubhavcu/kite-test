@@ -59,7 +59,7 @@ export default {
 	},
 	computed:{
 		storeLists(){
-			return [...this.$store.state.lists]
+			return [...this.$store.state.selected_lists]
 		},
 		errorLists(){
 			return this.storeLists.filter(list => !list.startsWith("https://twitter.com"))
