@@ -7,6 +7,7 @@ const fn = require("./_fn.js")
 const Papa = require('papaparse')
 const jwt = require('jsonwebtoken');
 const { set_user_or_null, sendEmail } = require('./_fn.js');
+const { default: formBodyPlugin } = require('fastify-formbody');
 
 const app = fastify({
 	ajv: {
@@ -82,16 +83,39 @@ app.setErrorHandler(async (error, req, reply) => {
 app.route({
 	url:"/api/test",
 	method:["GET"],
-	handler: async (re, rep) => {
-		const teams = await fn.get_many("teams")
-		for (const team of teams){
-			await fn.add_one("users", {
-				email:team.admin_emails[0],
-				billing:team.billing || {},
-				created_at:team.created_at
-			})
-		}
+	handler: async (request, rep) => {
+		// const teams = await fn.get_many("teams")
+		// for (const team of teams){
+		// 	await fn.add_one("users", {
+		// 		email:team.admin_emails[0],
+		// 		billing:team.billing || {},
+		// 		created_at:team.created_at
+		// 	})
+		// }
 		return "done"
+	}
+})
+
+app.route({
+	url:"/api/free-code/:email",
+	method:["GET"],
+	handler: async (request, reply) => {
+		const password = request.query.password
+		if(password !== "ks21"){
+			throw new Error ("400::You can't do this. The password is wrong!")
+		}
+		const email = fn.validate_email(request.params.email)
+		const user = await fn.get_one("users", ["email", "==", email])
+		if (!user){
+			throw new Error("400::This user doesn't exists")
+		}
+		const codes = (user.billing || {}).codes || []
+		if (codes.length !==1){
+			throw new Error (`400::This user has ${codes.length} codes. You can't add more`)
+		}
+		const billing = { ...user.billing, codes:[codes, "free-code"] }
+		await fn.update_one("users", {billing:billing})
+		return `We have added one free code to the user ${email}`
 	}
 })
 
