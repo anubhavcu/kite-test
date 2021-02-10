@@ -67,7 +67,7 @@ export default {
 				return this.storeLists.join("\n")
 			},
 			set(v){
-				this.$store.commit("UPDATE_STORE", { lists: v.split("\n") })
+				this.$store.commit("UPDATE_STORE", { selected_lists: v.split("\n") })
 			}
 		}
 	},

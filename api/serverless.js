@@ -195,7 +195,6 @@ app.route({
 		const pages = [1,11,21,31,41]
 		for (let page of pages) {
 			params['start'] = page
-			// console.log(`Getting pages starting from index ${page}`)
 			const pageLists = await axios.get("https://www.googleapis.com/customsearch/v1/siterestrict", {params:params})
 			.then(r => {return r.data.items || false})
 			.catch(e => {console.log(e); return false} )
@@ -331,30 +330,34 @@ app.route({
 			for (let url of urls) {
 
 				const payload = {count: "5000", include_entities:false, skip_status:true}
-
+				let list_ok = false;
 				if (url.includes("https://twitter.com/i/lists/")){
-					url = url.replace("https://twitter.com/i/lists/", "")
-					url = url.split("?")
-					payload.list_id = url[0]
+					const list_id = url.replace('https://twitter.com/i/lists/','').split(/[/, ?, #]+/)
+					if (list_id && list_id.length){
+						list_ok = true
+						payload.list_id = list_id
+					}
 				}
 				else {
-					const path = url.replace("https://twitter.com/", "")
-					const values = path.split("/lists/")
-					if (values.length < 2) {
-						console.error(`The path: ${path} is malformed`)
+					const values = url.replace('https://twitter.com/','').split('/lists/')
+					const [owner_screen_name, slug] = values
+					if (!owner_screen_name || !slug){
+						console.error(`The url: ${url} is malformed`)
 					} else {
-						const [owner_screen_name, slug] = values
 						payload.owner_screen_name = owner_screen_name
-						payload.slug = slug
+						payload.slug = slug.split(/[/, ?, #]+/)[0]
+						list_ok = payload.slug.length && payload.owner_screen_name.length
 					}
 				}
-				apiCalls.push(axios.get(endpoint.url, {params:payload, headers:headers}).then(r => r.data)
-				.catch(e => {
-					if (e.response && e.response.data && e.response.data.errors) {
-						console.error(`Twitter list errors: ${JSON.stringify(e.response.data.errors)}`)
-					}
-					return null
-				}))
+				if (list_ok){
+					apiCalls.push(axios.get(endpoint.url, {params:payload, headers:headers}).then(r => r.data)
+					.catch(e => {
+						if (e.response && e.response.data && e.response.data.errors) {
+							console.error(`Twitter list errors: ${JSON.stringify(e.response.data.errors)}`)
+						}
+						return null
+					}))
+				}
 			}
 
 			await axios.all(apiCalls).then(lists => {

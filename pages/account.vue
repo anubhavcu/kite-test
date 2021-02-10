@@ -33,6 +33,9 @@ export default {
 			// account:null,
 		}
 	},
+	mounted(){
+		this.$auth.fetchUser()
+	},
 	computed: {
 		showBuyMore(){
 			return this.infos['Exports Per Month'] === 15
@@ -49,11 +52,16 @@ export default {
 				}
 			}
 
+			const today = new Date();
+			const date = `${today.getFullYear()}_${today.getMonth()}`
+			const download_counter = user.download_counter || {}
+			const downloads = download_counter[date] || 0
 			return {
 				email:user.email,
 				plan:billing.plan,
 				"Searches Per Month":"Unlimited",
-				"Exports Per Month":(billing.codes || []).length > 1 ? "Unlimited" : 15,
+				"Total Exports Done this month":downloads,
+				"Allowed Exports Per Month": (billing.codes || []).length > 1 ? "Unlimited" : 15,
 				"Next Renewal":"Never",
 			}
 		}
