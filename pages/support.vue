@@ -37,6 +37,19 @@
           </dd>
         </div>
 
+
+        <div>
+          <dt class="text-lg leading-6 font-medium text-gray-900">
+            What data KiteList exports?
+          </dt>
+          <dd class="mt-2 text-base text-gray-500">
+            KiteList can export all subscribers & members of Twitter Lists. 
+			For each subscriber or member it will export their handle, location, number of followers, name, description and more. 
+			You can have a look at a demo export at <nuxt-link to="/demo" class="text-blue-700">KiteList.com/demo</nuxt-link>
+          </dd>
+        </div>
+
+
         <div>
           <dt class="text-lg leading-6 font-medium text-gray-900">
             What's your refund policy?
