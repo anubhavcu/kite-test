@@ -38,7 +38,6 @@
 									<nuxt-link v-show="$auth.loggedIn" to="/auth?logout=true" class="btn py-2 bg-red-700 mb-4 md:mb-0 md:ml-5 w-auto block md:inline-flex">
 										<span>Logout</span>
 									</nuxt-link>
-
 							</div>
 						</div>					
 					</div>
