@@ -56,6 +56,7 @@ export default {
 	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy', '@nuxtjs/google-analytics'],
 	plugins:[
 		{ src: '~/plugins/shared.js'},
+		{ src: '~/plugins/axios.client.js', mode:'client'},
 		{ src: '~/plugins/ga.client.js', mode:'client'}
 	],
 	axios: {

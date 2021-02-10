@@ -34,6 +34,7 @@
 									<nuxt-link v-show="!$auth.loggedIn" to="/price" class='font-medium mb-4 md:mb-0 md:ml-5 block md:inline-flex'>Price</nuxt-link>
 									<nuxt-link v-show="!$auth.loggedIn" to="/auth" class='btn py-2 bg-green-500 md:ml-5 text-white'>Login</nuxt-link>
 									<!-- LOGIN REQUIRED -->
+									<nuxt-link v-show="$auth.loggedIn" to="/account" class='font-medium mb-4 md:mb-0 md:ml-5 block md:inline-flex'>Account</nuxt-link>
 									<nuxt-link v-show="$auth.loggedIn" to="/auth?logout=true" class="btn py-2 bg-red-700 mb-4 md:mb-0 md:ml-5 w-auto block md:inline-flex">
 										<span>Logout</span>
 									</nuxt-link>

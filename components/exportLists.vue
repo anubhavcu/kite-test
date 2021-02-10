@@ -95,14 +95,15 @@ export default {
 				successCallback:(paddleData) => { vm.downloadLeads(paddleData) }
 			})
     	},
-		async downloadLeads(){
-			this.downloading = true
+		async downloadLeads(paddleData){
 			const links = this.storeLists.filter(list => list.startsWith("https://twitter.com"))
 			if (!links.length){
 				alert("You need to pass at least one valid link!")
 				return;
 			}
-			const r = await this.$axios.$post("/api/leads", {download:this.product, links:links})
+			this.downloading = true
+			const r = await this.$axios.$post("/api/leads", {download:this.product, links:links, paddle_data:paddleData})
+			.catch(e => this.downloading = false)
 			this.downloading = false
 			if ("url" in r) {
 				window.location.href = r.url

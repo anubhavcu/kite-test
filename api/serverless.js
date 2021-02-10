@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
 const Papa = require('papaparse')
 const jwt = require('jsonwebtoken');
-const { set_user_or_null } = require('./_fn.js');
+const { set_user_or_null, sendEmail } = require('./_fn.js');
 
 const app = fastify({
 	ajv: {
@@ -83,7 +83,15 @@ app.route({
 	url:"/api/test",
 	method:["GET"],
 	handler: async (re, rep) => {
-		return 'done'
+		const teams = await fn.get_many("teams")
+		for (const team of teams){
+			await fn.add_one("users", {
+				email:team.admin_emails[0],
+				billing:team.billing || {},
+				created_at:team.created_at
+			})
+		}
+		return "done"
 	}
 })
 
@@ -98,11 +106,13 @@ app.route({
 	},
 	handler: async (request, reply) => {
 		if (request.raw.method === "GET"){
-			return request.user
+			if (!request.user || !request.user.id){
+				return null;
+			}
+			return await fn.get_id("users", request.user.id)
 		}
 
 		else if (request.raw.method === "POST") {
-			let user = {}
 			const jwt_secret = process.env.KITELIST_JWT_PRIVATE
 			const body = request.body
 			if (body.token) { // Convert short-lived token to long-lived one
@@ -114,33 +124,21 @@ app.route({
 				})
 
 				const tokenEmail = fn.validate_email(token.email)
-				const existing_team = await fn.get_one("teams", ['admin_emails', 'array-contains', tokenEmail])
-
-				if (existing_team) {
-					user = { team_id: existing_team.id, email: tokenEmail }
+				const existing_user = await fn.get_one("users", ["email", "==", tokenEmail])
+				if (!existing_user) {
+					// This should be impossible because a short lived token was already generated
+					throw new Error("400::You don't have an active account. Please signup at KiteList.com/price")
 				}
-				
-				else {
-					throw new Error("400::You don't have an active account. Please signup at KiteList.com/pro")
-					const new_team_id = await fn.add_one("teams", {admin_emails: [tokenEmail], created_at:fn.timestamp_sc()})
-					user = {team_id:new_team_id, email:tokenEmail}
-				}
-
-				if (!user.team_id || !user.email) {
-					throw new Error("400::There was an error logging you in. Please try again later")
-				}
-				const longLivedToken = jwt.sign({ data: user }, jwt_secret, { expiresIn: '90 days' })
+				const longLivedToken = jwt.sign({ data: {id:existing_user.id} }, jwt_secret, { expiresIn: '90 days' })
 				return { token: longLivedToken }
 			} 
 			
 			else { // Send short lived token
 				const email = fn.validate_email(body.email)
-
-				const team = await fn.get_one("teams", ['admin_emails', 'array-contains', email])
-				if (!team){
-					throw new Error("400::You don't have an active account. Please signup at KiteList.com/pro")
+				const user = await fn.get_one("users", ["email", "==", email])
+				if (!user){
+					throw new Error("400::You don't have an active account. Please signup at KiteList.com/price")
 				}
-
 				const shortLifeToken = jwt.sign({ data: { email: email } }, jwt_secret, { expiresIn: '1h' })
 				const tokenUrl = `${body.url || process.env.KITELIST_BASE_URL}/auth?token=${shortLifeToken}`
 
@@ -148,7 +146,6 @@ app.route({
 					console.log('\x1b[36m', `In production we would email: ${email} the link:`, '\x1b[32m', `${tokenUrl}`, '\x1b[0m');
 					return { status: "Ok" }
 				} else {
-					const email_config = { action_url: tokenUrl }
 					const html = " <p><h1>Hey there!</h1><br><br>Use this link to login: <br><br> <a href='login_link'>login_link</a></p>".replace(/login_link/g, tokenUrl)
 					const email_sent = await fn.sendEmail(email, null, null, html)
 					if (!email_sent) {
@@ -182,8 +179,16 @@ app.route({
 		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX,q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
 		const cache = await fn.get_id("cached_searches", search_term)
 		if (cache){
-			console.log("returning cached ")
 			return JSON.parse(cache.lists)
+		}
+		// Throw an error if more than 1K daily searches 
+		// (Safety measure to prevent massive bills in case of DDoS attack - Since no login is required for this endpoint)
+		const now = fn.timestamp_sc()
+		const last24h = now - 86400
+		const all_searches = await fn.get_many("cached_searches", ['created_at', ">", last24h]) || []
+		if (all_searches.length > 1000){
+			await fn.sendEmail(process.env.KITELIST_ADMIN_EMAIL, null, null, "KITELIST HAS MORE THAN 1K SEARCHES IN THE LAST 24H - CHECK IF IT'S NORMAL")
+			throw new Error("400::The system is over it's capacity. Please try again later")
 		}
 		// Find lists on top 5 pages
 		let lists = []
@@ -231,25 +236,26 @@ app.route({
 		if (!code_exists){
 			throw new Error("400::This code is wrong. Make sure that you paste the correct code")
 		} else {
-			const code_is_used = await fn.get_one("teams", ["billing.codes", "array-contains", code])
+			const code_is_used = await fn.get_one("users", ["billing.codes", "array-contains", code])
 			if (code_is_used){
 				throw new Error("400::Sorry this code has already been used")
 			}
 		}
 
-		let existing_team = await fn.get_one("teams", ['admin_emails', 'array-contains', email])
-		let team_id = existing_team ? existing_team.id : null
-		if (!team_id){
-			team_id = await fn.add_one("teams", {admin_emails: [email], created_at:fn.timestamp_sc()})
+		let existing_user = await fn.get_one("users", ['email', '==', email])
+		let user_id = existing_user ? existing_user.id : null
+		if (!user_id){
+			user_id = await fn.add_one("users", {email: email, created_at:fn.timestamp_sc()})
 		}
-		let billing = {plan:"AppSumo", codes:[code], created_at:now, edited_at:now} // One Year from now
-		if (existing_team && existing_team.billing && existing_team.billing.codes){
-			// Codes array already exists. SO we simply push the new code there (for multiple codes)
-			billing = existing_team.billing
+		let billing = {plan:"AppSumo", codes:[code], created_at:now, edited_at:now}
+		if (existing_user && existing_user.billing && existing_user.billing.codes){
+			// Codes array already exists. 
+			// SO we simply push the new code there (for multiple codes)
+			billing = existing_user.billing
 			billing.codes.push(code)
 			billing.edited_at = now
 		}
-		await fn.update_one("teams", team_id, {billing:billing})
+		await fn.update_one("users", user_id, {billing:billing})
 		return "Promotion Saved Correctly"	
 	}
 })
@@ -275,12 +281,41 @@ app.route({
 						type:"string",
 						pattern: "^https://twitter.com/"
 					}
+				},
+				paddle_data:{
+					type:"object"
 				}
 			}
 		}
 	},
 	handler: async (request, reply) => {
-		const {download, links} = request.body
+		const {download, links, paddle_data} = request.body
+		const {user} = request
+
+		if (!user && !(paddle_data && paddle_data.checkout)) {
+			throw new Error ("400::Please Login to do this")
+		}
+
+		const today = new Date()
+		const date = `${today.getFullYear()}_${today.getMonth()}`
+		let download_counter = {}
+		let current_downloads = 0;
+
+		if (user){
+			// Check if goes above the limit
+			const db_user = await fn.get_id("users", request.user.id)
+			if (!db_user){
+				throw new Error("400::This user was not found in the database")
+			}
+			const codes = db_user.billing.codes || []
+			const max_downloads = codes.length > 1 ? null : 15
+			download_counter = db_user.download_counter || {}
+			current_downloads = download_counter[date] || 0
+			if (max_downloads && (current_downloads > max_downloads)){
+				throw new Error("400::You have reached your monthly download limit. The limit will reset at the beginning of next month")
+			}
+		}
+
 		const urls = links.map(link => link.toLowerCase() )
 		let apiData = []
 		let endpoints = [
@@ -340,11 +375,18 @@ app.route({
 		// Storage
 		const now = Math.round(new Date().getTime());
 		const bucket = await fn.connectToBucket()
-		const file = await bucket.file(`export_${now}.csv`)
+		const file = await bucket.file(`kitelist_export_${now}.csv`)
 		const write = await file.save(csvContent)
 		const tsIn48Hours = now + (48 * 3600000); // 48h
 		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
 		// Send CSV via email
+		
+		// Update user limits
+		if (user){
+			// Add this download 
+			download_counter[date] = current_downloads + 1
+			await fn.update_one("users", user.id, {download_counter:download_counter})
+		}
 		return {url:url}
 	}
 })
