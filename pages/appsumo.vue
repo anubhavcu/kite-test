@@ -6,20 +6,20 @@
 			<p class='mt-3'>
 				Get ready to enjoy a lifetime of fresh leads!	
 			</p>
-			<p class='rounded p-2 border border-dashed border-blue-400 bg-white text-blue-700 max-w-lg my-3'>
-				<span class='font-medium'>Do you have multiple codes?</span> <br> Just submit this form multiple times with the same email address!
+			<p class='rounded p-2 border-2 border-dashed border-gray-200 bg-transparent text-gray-600 max-w-lg my-3'>
+				<span>Do you have multiple codes?</span> <br> Just submit this form multiple times with the <b>same</b> email address!
 			</p>
 		</div>
 		<form class="max-w-lg" @submit.prevent="sendCode">
-			<label class='block mt-4 font-bold text-lg' for='email'>Email:</label>
-			<input id="email" name="email" class='my-form bg-white shadow mt-1' placeholder="hello@kitelist.com" type="email" autocomplete="on" v-model="email" @input='error=null'>
+			<label class='block mt-4 font-bold text-lg tracking-wide' for='email'>Email:</label>
+			<input id="email" name="email" class='my-form w-full bg-white shadow mt-1' placeholder="hello@kitelist.com" type="email" autocomplete="on" v-model="email" @input='error=null'>
 			
 			<label class='sr-only' for="miele">Don't fill this</label>
 			<input aria-label="miele" id="miele" class='hidden' style="display:none !important " label="Miele" tabindex="-1"
 								autocomplete="off" v-model="miele" type="text" name="miele" placeholder="miele" />
 			
-			<label class='block mt-4 font-bold text-lg' for="code"> Your AppSumo Code: </label>
-			<input name="code" id="code" class='my-form bg-white shadow mt-1' autocomplete="off" placeholder="secret-code" v-model='code' @input='error=null'>
+			<label class='block mt-4 font-bold text-lg tracking-wide' for="code"> Your AppSumo Code: </label>
+			<input name="code" id="code" class='my-form w-full bg-white shadow mt-1' autocomplete="off" placeholder="secret-code" v-model='code' @input='error=null'>
 		
 
 			<label class="inline-flex items-center mt-4 label">
@@ -38,7 +38,7 @@ export default {
 	layout:'main',
 	head() {
       return {
-		title: "AppSumo Zero Promotion"
+		title: "KiteList Lifetime Deal"
 	  }
 	},
 	data(){
