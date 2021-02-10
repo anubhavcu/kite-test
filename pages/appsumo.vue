@@ -6,6 +6,9 @@
 			<p class='mt-3'>
 				Get ready to enjoy a lifetime of fresh leads!	
 			</p>
+			<p class='rounded p-2 border border-dashed border-blue-400 bg-white text-blue-700 max-w-lg my-3'>
+				<span class='font-medium'>Do you have multiple codes?</span> <br> Just submit this form multiple times with the same email address!
+			</p>
 		</div>
 		<form class="max-w-lg" @submit.prevent="sendCode">
 			<label class='block mt-4 font-bold text-lg' for='email'>Email:</label>
@@ -21,7 +24,7 @@
 
 			<label class="inline-flex items-center mt-4 label">
                 <input type="checkbox" class="mr-2 h-5 w-5 text-gray-600" v-model="tos">
-				<p>I've read and I accept the <nuxt-link class='text-indigo-500' to="/tos">terms of service and the privacy policy</nuxt-link>  </p>
+				<p>I've read and I accept the <nuxt-link class='text-blue-700' to="/tos">terms of service and the privacy policy</nuxt-link>  </p>
             </label>
 			
 			<p class='small-error my-5' v-show="error">{{error}}</p>
