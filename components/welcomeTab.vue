@@ -21,11 +21,11 @@
 					<ul class="list-decimal list-inside mt-6">
 						<li>
 							<b>Find relevant lists:</b><br>
-							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="tabIndex=1">Search Engine</span> or search directly on Google for lists in your niche</p>
+							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="$store.commit('UPDATE_STORE', {tabIndex:1})">Search Engine</span> or search directly on Google for lists in your niche</p>
 						</li>
 						<li class='mt-4'>
 							<b>Export Subscribers & Members:</b><br>
-							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="tabIndex=2">Export Tool</span> to export all members and subscribers of your lists</p>
+							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="$store.commit('UPDATE_STORE', {tabIndex:2})">Export Tool</span> to export all members and subscribers of your lists</p>
 						</li>
 						<li class='mt-4'>
 							<b>Upload the CSV to Twitter Ads:</b><br>
