@@ -1,6 +1,6 @@
 <template>
 	<div>
-<div class="relative bg-white overflow-hidden">
+<div class="relative bg-white overflow-hidden h-page">
   <div class="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
     <svg class="absolute top-0 left-1/2 transform translate-x-64 -translate-y-8" width="640" height="784" fill="none" viewBox="0 0 640 784">
       <defs>
@@ -12,7 +12,7 @@
       <rect x="118" width="404" height="784" fill="url(#9ebea6f4-a1f5-4d96-8c4e-4c2abf658047)" />
     </svg>
   </div>
-  <div class="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
+  <div class="relative pt-6 pb-16 sm:pb-16 lg:pb-20">
 
     <main class="mt-12 mx-auto max-w-7xl px-4 sm:mt-16 sm:px-6 lg:mt-20">
       <div class="lg:grid lg:grid-cols-12 lg:gap-8">

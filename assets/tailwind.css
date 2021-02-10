@@ -20,7 +20,7 @@
 }
 
 .h-page { /* PAGE LESS NAVBAR */
-	min-height: calc(100vh - 2.5rem);
+	min-height: calc(100vh - 3rem);
 }
 
 .min-h-70vh{
