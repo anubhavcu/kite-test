@@ -97,6 +97,30 @@ app.route({
 })
 
 app.route({
+	url:"/api/admin/:action",
+	method:["POST"],
+	handler: async (request, reply) => {
+		const action = request.params.action
+		const {password} = request.body
+		if (request.raw.method !== "POST" || password !== "25736dh%WGH@%@*&@GSH928"){
+			throw new Error("400::Not Allowed")
+		}
+		switch (action) {
+			case 'users':
+				const users = await fn.get_many("users")
+				return users.map(user => ({
+					email:user.email,
+					created_at:user.created_at,
+					codes: ((user.billing || {}).codes || []).join(", ")
+				}))
+			default:
+				throw new Error("400::Action not found")
+		}
+	}
+})
+
+
+app.route({
 	url:"/api/free-code/:email",
 	method:["GET"],
 	handler: async (request, reply) => {
