@@ -15,7 +15,12 @@ export default function ({ $axios, redirect }) {
 				errorMessage = JSON.stringify(e.response)
 				break;
 		}
-		alert(errorMessage)
+
+		// MAYBE CATCH WITH SENTRY HERE? 
+		
+		if (errorMessage !== "Request aborted"){
+			alert(errorMessage)
+		}
 		return;
 	})
   }
