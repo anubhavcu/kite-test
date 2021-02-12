@@ -1,5 +1,5 @@
 <template>
-  <div class='flex h-page items-center justify-center'>
+  <div class='flex h-page items-center justify-center p-4'>
 	  <div>
 		<h1 class='text-2xl'>Welcome!</h1>
 		<p>
@@ -8,15 +8,3 @@
 	  </div>
   </div>
 </template>
-
-<script>
-
-export default {
-	mounted(){
-		console.log(fox)
-	}
-}
-</script>
-
-<style>
-</style>
