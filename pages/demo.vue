@@ -31,12 +31,12 @@
   </div>
 </template>
 <script>
-const d = require("~/assets/demo.json")
+const demo = require("~/assets/demo.json")
 export default {
 	layout:'index',
 	computed:{
 		rows(){
-			return d
+			return demo
 		}
 	}
 }

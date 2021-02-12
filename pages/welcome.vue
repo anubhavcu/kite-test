@@ -3,7 +3,7 @@
 	  <div>
 		<h1 class='text-2xl'>Welcome!</h1>
 		<p>
-			We currently review all signups manually. You will receive a signup link within 24 hours!
+			We currently review all sign-ups manually. You will receive a sign-up link within 24 hours!
 		</p>
 	  </div>
   </div>
@@ -12,12 +12,9 @@
 <script>
 
 export default {
-	layout:'index',
-	data(){
-		return {
-			email:""
-		}
-	},
+	mounted(){
+		console.log(fox)
+	}
 }
 </script>
 

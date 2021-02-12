@@ -19,11 +19,12 @@
 		"go-live": "npx localtunnel --port 3000 --subdomain kitelist"
 	},
 	"dependencies": {
-		"@google-cloud/firestore": "^4.9.2",
+		"@google-cloud/firestore": "^4.9.3",
 		"@google-cloud/storage": "^5.7.4",
 		"@nuxtjs/auth": "^4.9.1",
 		"@nuxtjs/axios": "^5.13.1",
 		"@nuxtjs/content": "^0.3.0",
+		"@nuxtjs/sentry": "^5.0.1",
 		"autoprefixer": "^9.8.6",
 		"file-saver": "^2.0.2",
 		"node-cache": "^5.0.2",
@@ -35,9 +36,7 @@
 		"vue-gtag": "^1.11.0"
 	},
 	"devDependencies": {
-		"@nuxtjs/google-analytics": "^2.2.2",
 		"@nuxtjs/proxy": "^2.1.0",
-		"@nuxtjs/sentry": "^5.0.1",
 		"@nuxtjs/tailwindcss": "^3.4.2",
 		"@sentry/node": "^6.1.0",
 		"aws-lambda-fastify": "^1.4.4",

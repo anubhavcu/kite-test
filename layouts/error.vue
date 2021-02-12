@@ -18,7 +18,8 @@
 <script>
 export default {
 	props: ['error'],
-	methods: {
+	mounted(){
+		this.$sentry.captureException(new Error(`${this.error.statusCode}: ${this.errorMessage}`))
 	}
 }
 </script>

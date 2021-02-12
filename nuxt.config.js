@@ -1,5 +1,8 @@
 const isProd = process.env.NODE_ENV === "production"
 const useProxy = process.env.NODE_ENV === "development" && !process.env.NETLIFY
+
+console.log(`Building KiteList: [production: ${isProd}] - [Environment: ${process.env.NODE_ENV}]`)
+
 export default {
 	ssr: true, // Universal mode
 	target: 'static',
@@ -52,8 +55,8 @@ export default {
 		color: '#fff'
 	},
 	css: ['~/assets/tailwind.css'],
-	modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
-	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy', '@nuxtjs/google-analytics'],
+	modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/sentry'],
+	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy'],
 	plugins:[
 		{ src: '~/plugins/shared.js'},
 		{ src: '~/plugins/axios.client.js', mode:'client'},
