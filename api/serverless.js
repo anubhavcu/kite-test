@@ -137,7 +137,7 @@ app.route({
 		if (codes.length !==1){
 			throw new Error (`400::This user has ${codes.length} codes. You can't add more`)
 		}
-		const billing = { ...user.billing, codes:[codes, "free-code"] }
+		const billing = { ...user.billing, codes:[...codes, "free-code"] }
 		await fn.update_one("users", user.id, {billing:billing})
 		return `We have added one free code to the user ${email}`
 	}
