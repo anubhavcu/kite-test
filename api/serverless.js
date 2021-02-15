@@ -383,7 +383,7 @@ app.route({
 					const list_id = url.replace('https://twitter.com/i/lists/','').split(/[/, ?, #]+/)
 					if (list_id && list_id.length){
 						list_ok = true
-						payload.list_id = list_id
+						payload.list_id = list_id[0]
 					}
 				}
 				else {
