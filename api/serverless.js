@@ -84,15 +84,58 @@ app.route({
 	url:"/api/test",
 	method:["GET"],
 	handler: async (request, rep) => {
-		// const teams = await fn.get_many("teams")
-		// for (const team of teams){
-		// 	await fn.add_one("users", {
-		// 		email:team.admin_emails[0],
-		// 		billing:team.billing || {},
-		// 		created_at:team.created_at
-		// 	})
+		process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+		const URL_JS = 'https://abs.twimg.com/responsive-web/client-web/main.90f9e505.js';
+		const GRAPHQL_JS = 'https://twitter.com/i/api/graphql/ku_TJZNyXL2T4-D9Oypg7w/UserByScreenName';
+		const USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/96.0';
+		const token = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA"
+		let config = {
+			headers:{
+				authorization:`Bearer ${token}`, 
+				'User-Agent':USER_AGENT,
+				// 'Host':"mobile.twitter.com"
+				// "x-twitter-auth-type":'OAuth2Session' 
+			}
+		}
+
+		// config = {}
+		
+		// const {data} = await axios.get(URL_JS)
+		const vars = encodeURIComponent(JSON.stringify({"listId":"715919216927322112","withUserResult":false}))
+		try {
+		const f = await axios.get(`https://api.twitter.com/graphql/18MAHTcDU-TdJSjWWmoH7w/ListByRestId?variables=${vars}`, config)
+		console.log(f.data)
+		return f.data
+		}
+		catch(e){
+			console.log(e.message)
+			return e.response.statusText
+		}
+		// /graphql/0se5fTpTWRNzrupcMxWTKg/ListSubscribers?
+
+		// const token = data.match(/s=\"AAAAA[^\"]+\"/);
+		// console.log("Token is: ", token)
+		// const token = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA"
+		// const config = {headers:{authorization:`Bearer ${token}`, 'User-Agent':USER_AGENT, "x-twitter-auth-type":'OAuth2Session' }}
+		
+		// const temp = await axios.post('https://api.twitter.com/1.1/guest/activate.json', {}, config)
+		// console.log(temp.data)
+		// try {
+		// 	const j = await axios.get(`https://mobile.twitter.com/i/api/graphql/18MAHTcDU-TdJSjWWmoH7w/ListByRestId?variables={"listId":"715919216927322112","withUserResult":false}`, config)
+		// 	return j.data
 		// }
-		return "done"
+		// catch(e){
+		// 	console.log(e.response)
+		// 	return "Error: " + e.response.statusText
+		// }
+		// try{
+		// 	const f = await axios.get("https://api.twitter.com/1.1/guest/activate.json", {headers:{authorization:`Bearer ${token}`, 'User-Agent':USER_AGENT}})
+		// }
+		// catch(e){
+		// 	console.log(e.response)
+		// }
+		// // console.log("F IS ", f.guest_token)
+		// return j.data
 	}
 })
 
