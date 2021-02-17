@@ -8,6 +8,7 @@ const Papa = require('papaparse')
 const jwt = require('jsonwebtoken');
 const { set_user_or_null, sendEmail, delete_one } = require('./_fn.js');
 const { default: formBodyPlugin } = require('fastify-formbody');
+const Sentry = require("@sentry/node");
 
 const crypto = require('crypto');
 const hash = (string) => crypto.createHash('sha256').update(string, 'utf8').digest('hex');
@@ -56,31 +57,32 @@ app.addHook('onSend', async (request, reply, payload) => {
 
 // Error Handler
 app.setErrorHandler(async (error, req, reply) => {
+	let error_code = 500;
+	let error_message = "Sorry there has been a server error.."
+
 	if (error.validation){
 		reply.status(406)
 		const uniques_validation_errors = [... new Set(error.validation.map(val => `${val.dataPath} ${val.message} (${JSON.stringify(val.params)})`))]
-		const validation_errors = uniques_validation_errors.join(" && ")
-		console.log("\x1b[33m", validation_errors, "\x1b[0m")
-		throw new Error (validation_errors)
+		error_message = uniques_validation_errors.join(" && ")
+		error_code = 400
 	}
-	const code_and_message = error.message.split("::")
-	const statusCode = code_and_message.length > 1 ? code_and_message[0] : 500
-	reply.status(statusCode)
-	if (statusCode === 500) {
-		if (isProd) {
-			const Sentry = require("@sentry/node");
-			Sentry.init({ dsn: process.env.KITELIST_SENTRY_FASTIFY })
-			Sentry.captureException(error);
-			await Sentry.flush(2000);
-		}
-		else {
-			console.log("\x1b[31m", error, "\x1b[0m")
-		}
-		throw new Error("Sorry there has been a server error..")
-	} 
 	else {
-		throw new Error(code_and_message.length ? code_and_message[1] : code_and_message)
+		const code_and_message = error.message.split("::")
+		error_code = code_and_message.length > 1 ? code_and_message[0] : 500
+		error_message = code_and_message.length > 1 ? code_and_message[1] : error_message
 	}
+	
+	if (isProd) {
+		Sentry.init({ dsn: process.env.KITELIST_SENTRY_FASTIFY })
+		Sentry.captureException(error);
+		await Sentry.flush(2000);
+	}
+	else {
+		console.log("\x1b[31m", error, "\x1b[0m")
+	}
+	
+	reply.status(error_code)
+	throw new Error(error_message)
 })
 
 // Routes
