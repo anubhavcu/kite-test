@@ -6,8 +6,11 @@ const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
 const Papa = require('papaparse')
 const jwt = require('jsonwebtoken');
-const { set_user_or_null, sendEmail } = require('./_fn.js');
+const { set_user_or_null, sendEmail, delete_one } = require('./_fn.js');
 const { default: formBodyPlugin } = require('fastify-formbody');
+
+const crypto = require('crypto');
+const hash = (string) => crypto.createHash('sha256').update(string, 'utf8').digest('hex');
 
 const app = fastify({
 	ajv: {
@@ -79,6 +82,26 @@ app.setErrorHandler(async (error, req, reply) => {
 		throw new Error(code_and_message.length ? code_and_message[1] : code_and_message)
 	}
 })
+
+// Routes
+app.route({
+	url: "/api/test",
+	method: ["GET"],
+	handler: async (request, reply) => {
+		// const now = fn.timestamp_sc()
+		// const searches = await fn.get_many("cached_searches")
+		// for (const s of searches){
+		// 	const id = hash(s.id)
+		// 	if (!s.search_term){
+		// 		console.log('delete ', s.id)
+		// 		await delete_one('cached_searches', s.id)
+		// 	}
+		// 	// await fn.create_or_replace("cached_searches", id, {search_term:s.id, lists:s.lists, created_at:s.created_at || null})
+		// }
+		// return "Donnins"
+	}
+})
+
 
 app.route({
 	url:"/api/admin/:action",
@@ -206,11 +229,13 @@ app.route({
 		}
 	},
 	handler: async (request, reply) => {
-		const search_term = request.params.search_term.toLowerCase()
+		const search_term = decodeURIComponent(request.params.search_term).toLowerCase()
+		const cache_id = hash(search_term)
 		const query = `site:https://twitter.com/i/lists/ OR site:twitter.com/*/lists ${search_term}`
-		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX,q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
-		const cache = await fn.get_id("cached_searches", search_term)
+		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX, q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
+		const cache = await fn.get_id("cached_searches", cache_id)
 		if (cache){
+			console.log("CACHED")
 			return JSON.parse(cache.lists)
 		}
 		// Throw an error if more than 1K daily searches 
@@ -245,7 +270,7 @@ app.route({
 				break;
 			}
 		}
-		await fn.create_or_replace("cached_searches", search_term, {lists:JSON.stringify(lists), created_at:fn.timestamp_sc()})
+		await fn.create_or_replace("cached_searches", cache_id, {search_term:search_term, lists:JSON.stringify(lists), created_at:fn.timestamp_sc()})
 		return lists
 	}
 })

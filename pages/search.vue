@@ -5,17 +5,19 @@
 export default {
 	mounted(){
 		// CUSTOM REDIRECT BECAUSE LINKS ARE WRONG ON THE APPSUMO OFFER PAGE
-		let url = "/app"
+		let query = null;
 		try {
 			const urlParams = new URLSearchParams(window.location.search);
-			const term = urlParams.get('q')
-			url = url += (term ? `?search=${term}` : '')
+			let term = urlParams.get('q')
+			if (term){
+				term = term.replace('watchesac', 'watches')
+				query = {search:term}
+			}
 		}
 		catch(e){
 			// Most likely URLSearchParams is not supported
 		}
-		url = url.replace('watchesac', 'watches')
-		this.$router.push(url)
+		this.$router.push({name:'app', query:query})
 	}
 }
 </script>

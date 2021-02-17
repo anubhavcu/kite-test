@@ -17,7 +17,8 @@ export const actions = {
 			return;
 		}
 		commit("UPDATE_STORE", {lists_loading:true})
-		const l = await this.$axios.$get(`/api/lists/${state.search_term.toLowerCase()}`)
+		const search_term = encodeURIComponent(state.search_term.toLowerCase())
+		const l = await this.$axios.$get(`/api/lists/${search_term}`)
 		commit("UPDATE_STORE", {lists:l || [], lists_loading:false})
 	}
 }
