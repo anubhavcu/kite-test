@@ -3,7 +3,7 @@ const { Firestore } = require('@google-cloud/firestore');
 const {Storage} = require('@google-cloud/storage');
 const jwt = require('jsonwebtoken')
 const axios = require("axios")
-
+const Papa = require('papaparse')
 
 const firebaseCredentials = {
 	"type": "service_account",
@@ -40,6 +40,18 @@ const fn = module.exports = {
 			}
 			request.user = result.data
 		})
+	},
+
+	async json2CsvUrl(json, name){
+		const csvBom = '\uFEFF' // Fix for Äö etc characters
+		const csvContent = csvBom + Papa.unparse(json)
+		const now = fn.timestamp_sc() * 1000 // Needs to be in milliseconds
+		const bucket = await fn.connectToBucket()
+		const file = await bucket.file(`kitelist_${name}_export_${now}.csv`)
+		const write = await file.save(csvContent)
+		const tsIn48Hours = now + (48 * 3600000); // 48h
+		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
+		return url
 	},
 	
 	micro_hash(string){

@@ -4,7 +4,6 @@ const fastify = require('fastify')
 const axios = require("axios")
 const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
-const Papa = require('papaparse')
 const jwt = require('jsonwebtoken');
 const { set_user_or_null, sendEmail, delete_one } = require('./_fn.js');
 const { default: formBodyPlugin } = require('fastify-formbody');
@@ -86,21 +85,42 @@ app.setErrorHandler(async (error, req, reply) => {
 })
 
 // Routes
+
+
+
 app.route({
-	url: "/api/test",
-	method: ["GET"],
+	url:"/api/get-profile/:screen_name/:type",
+	method:["GET"],
+	schema:{
+		summary:"Download members & followers from profiles instead of lists",
+		description: "THIS FUNCTION IS NOT ACTUALLY USED - But it could be useful sometimes",
+		tags: [],
+		params:{
+			required:['screen_name', 'type'],
+			properties: {
+				screen_name:{ type:"string", minLength:1 },
+				type:{ type:"string", enum:['followers', 'friends'] },
+			}
+		}
+	},
 	handler: async (request, reply) => {
-		// const now = fn.timestamp_sc()
-		// const searches = await fn.get_many("cached_searches")
-		// for (const s of searches){
-		// 	const id = hash(s.id)
-		// 	if (!s.search_term){
-		// 		console.log('delete ', s.id)
-		// 		await delete_one('cached_searches', s.id)
-		// 	}
-		// 	// await fn.create_or_replace("cached_searches", id, {search_term:s.id, lists:s.lists, created_at:s.created_at || null})
-		// }
-		// return "Donnins"
+		if (isProd){
+			return "Sorry. This endpoint is not available in production"
+		}
+		const {screen_name, type} = request.params
+		const token = ''
+		let users = []
+		const url = `https://api.twitter.com/1.1/${type}/list.json?screen_name=${screen_name}`
+		const payload = {count: "200", include_entities:false, skip_status:true}
+		let cursor = -1
+		while (cursor !== 0) {
+			const {data} = await axios.get(url, { headers : {"Authorization": `Bearer ${token}`}, params:{...payload, cursor:cursor}})
+			users = [...users, ...data.users]
+			cursor = data.next_cursor
+		}
+		const csv_url = await fn.json2CsvUrl(users, `${screen_name}_${type}`)
+		reply.redirect(csv_url)
+		return csv_url
 	}
 })
 
@@ -431,19 +451,8 @@ app.route({
 				})
 			})
 		}
-
-		const csvBom = '\uFEFF' // Fix for Äö etc characters
-		const csvContent = csvBom + Papa.unparse(apiData)
-
 		// Storage
-		const now = Math.round(new Date().getTime());
-		const bucket = await fn.connectToBucket()
-		const file = await bucket.file(`kitelist_export_${now}.csv`)
-		const write = await file.save(csvContent)
-		const tsIn48Hours = now + (48 * 3600000); // 48h
-		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
-		// Send CSV via email
-		
+		const url = await fn.json2CsvUrl(apiData, 'list')
 		// Update user limits
 		if (user){
 			// Add this download 
