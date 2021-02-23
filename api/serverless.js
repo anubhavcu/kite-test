@@ -108,7 +108,7 @@ app.route({
 			return "Sorry. This endpoint is not available in production"
 		}
 		const {screen_name, type} = request.params
-		const token = ''
+		const token = process.env.RANDOM_TWITTER_TOKEN
 		let users = []
 		const url = `https://api.twitter.com/1.1/${type}/list.json?screen_name=${screen_name}`
 		const payload = {count: "200", include_entities:false, skip_status:true}
@@ -121,6 +121,33 @@ app.route({
 		const csv_url = await fn.json2CsvUrl(users, `${screen_name}_${type}`)
 		reply.redirect(csv_url)
 		return csv_url
+	}
+})
+
+
+app.route({
+	url:"/api/clear-bucket",
+	method:["GET"],
+	schema:{
+		summary:"Deletes all old files in the bucket",
+		description: "Deletes all old files"
+	},
+	handler: async (request, reply) => {
+		const bucket = await fn.connectToBucket()
+		const [files] = await bucket.getFiles();
+		const now = fn.timestamp_sc()
+		let count = 0
+		for (const file of files){
+			const {name} = file
+			const arr = name.replace(".csv", "").split("_")
+			const created_at = parseInt(arr[arr.length - 1])
+			if ((now - created_at) > (24 * 3600)) { // 24 Hours in seconds
+				await bucket.file(name).delete();
+				console.log(`${name} was just deleted`)
+				count += 1
+			}
+		}
+		return `There were ${files.length} files. I've deleted ${count}. Total files remaining: ${files.length - count}`
 	}
 })
 

@@ -45,12 +45,12 @@ const fn = module.exports = {
 	async json2CsvUrl(json, name){
 		const csvBom = '\uFEFF' // Fix for Äö etc characters
 		const csvContent = csvBom + Papa.unparse(json)
-		const now = fn.timestamp_sc() * 1000 // Needs to be in milliseconds
+		const now = fn.timestamp_sc()
 		const bucket = await fn.connectToBucket()
 		const file = await bucket.file(`kitelist_${name}_export_${now}.csv`)
 		const write = await file.save(csvContent)
-		const tsIn48Hours = now + (48 * 3600000); // 48h
-		const url = await file.getSignedUrl({ action: 'read', expires: tsIn48Hours}).then(signedUrls => signedUrls[0])
+		const tsIn24Hours = (now * 1000) + (24 * 3600000); // 24h & now needs to be in milliseconds for Google
+		const url = await file.getSignedUrl({ action: 'read', expires: tsIn24Hours}).then(signedUrls => signedUrls[0])
 		return url
 	},
 	
