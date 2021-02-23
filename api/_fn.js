@@ -100,7 +100,7 @@ const fn = module.exports = {
 
 			if (v == 'bucket'){
 				const storage = new Storage({projectId: process.env.KITELIST_FIREBASE_PROJECT_ID, credentials:firebaseCredentials})
-				fireCache[v] = storage.bucket("jumpsh.appspot.com")
+				fireCache[v] = storage.bucket("kitelist_csv_files")
 				return fireCache[v]
 			}
 
