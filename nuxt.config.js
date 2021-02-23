@@ -54,7 +54,7 @@ export default {
 	loading: {
 		color: '#fff'
 	},
-	css: ['~/assets/tailwind.css'],
+	css: [],
 	modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/sentry'],
 	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy'],
 	plugins:[
@@ -68,7 +68,9 @@ export default {
 	},
 	tailwindcss: {
 		configPath: '~/tailwind.config.js',
-		cssPath: '~/assets/tailwind.css'
+		cssPath: '~/assets/tailwind.css',
+		purgeCSSInDev: false,
+		exposeConfig:false
 	},
 	proxy: useProxy ? ['http://localhost:3030/api'] : false,
 	sentry: {

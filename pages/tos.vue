@@ -204,7 +204,7 @@
 	</div>
 </template>
 <style scoped>
-h1{
+/* h1{
 	@apply font-semibold text-3xl mb-2 mt-8
 }
 h2{
@@ -212,5 +212,5 @@ h2{
 }
 ul{
 	@apply my-6 list-inside list-disc
-}
+} */
 </style>
