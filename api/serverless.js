@@ -133,6 +133,10 @@ app.route({
 		description: "Deletes all old files"
 	},
 	handler: async (request, reply) => {
+		// This function is no longer needed because
+		// kitelist_csv_files automatically deletes all files older than 1 day
+		// Using the lifecycle policy
+		throw new Error("400::This endpoint is not in use anymore")
 		const bucket = await fn.connectToBucket()
 		const [files] = await bucket.getFiles();
 		const now = fn.timestamp_sc()
