@@ -297,7 +297,6 @@ app.route({
 		const last24h = now - 86400
 		const all_searches = await fn.get_many("cached_searches", ['created_at', ">", last24h]) || []
 		if (all_searches.length > 1000){
-			await fn.sendEmail(process.env.KITELIST_ADMIN_EMAIL, null, null, "KITELIST HAS MORE THAN 1K SEARCHES IN THE LAST 24H - CHECK IF IT'S NORMAL")
 			throw new Error("400::The system is over it's capacity. Please try again later")
 		}
 		// Find lists on top 5 pages
