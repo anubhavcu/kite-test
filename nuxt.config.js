@@ -67,6 +67,7 @@ export default {
 		baseURL: process.env.KITELIST_BASE_URL
 	},
 	tailwindcss: {
+		jit: true,
 		configPath: '~/tailwind.config.js',
 		cssPath: '~/assets/tailwind.css',
 		purgeCSSInDev: false,
@@ -88,14 +89,6 @@ export default {
 			}
 		},
 		redirect: {login: "/auth", logout: false, callback: false, home: false }
-	},
-	content: {
-		markdown: {
-		  prism: {
-			theme: 'prismjs/themes/prism-tomorrow.css'
-		  }
-		},
-		liveEdit: false
 	},
 	build: {
 		terser: {
