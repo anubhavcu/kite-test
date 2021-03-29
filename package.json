@@ -4,6 +4,9 @@
 	"description": "KiteList",
 	"author": "cosbgn",
 	"private": true,
+	"engines": {
+		"node": ">=14.6"
+	},
 	"scripts": {
 		"dev": "npm run dev_backend & npm run dev_frontend --port 3000",
 		"dev_backend": "nodemon --watch api -r dotenv/config ./api/serverless.js",
