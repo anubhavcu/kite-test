@@ -1,3 +1,16 @@
 {
-	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)"
+	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+	"files.exclude": {
+		"node_modules/": true,
+		".nuxt/": true,
+		".vercel/":true,
+		"**/._*": true,
+		".gitignore":false,
+		"package-lock.json":true,
+		".npmrc":true,
+		".editorconfig":true,
+		"netlify.toml":true,
+		"vercel.json":true,
+		"jsconfig.json":true
+	}
 }

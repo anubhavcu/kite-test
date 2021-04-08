@@ -7,7 +7,7 @@ export default {
 	ssr: true, // Universal mode
 	target: 'static',
 	telemetry: false,
-	components: false,
+	components: true,
 	publicRuntimeConfig: {}, // Available in the frontend
 	privateRuntimeConfig: {
 		KITELIST_BASE_URL: process.env.KITELIST_BASE_URL, //process.env.VERCEL_URL || process.env.KITELIST_BASE_URL,

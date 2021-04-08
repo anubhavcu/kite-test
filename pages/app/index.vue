@@ -15,14 +15,14 @@
 
 			<div class='bg-white p-5 border-t border-gray-50 min-h-70vh'>
 				<div v-show="!tabIndex" class='leading-8'>
-					<welcomeTab></welcomeTab>
+					<lazyWelcomeTab></lazyWelcomeTab>
 				</div>
 				<div v-show="tabIndex===1">
-					<searchLists></searchLists>
+					<lazySearchLists></lazySearchLists>
 				</div>	
 
 				<div v-show="tabIndex===2">
-					<exportLists></exportLists>
+					<lazyExportLists></lazyExportLists>
 				</div>				
 			</div>
 		</div>
@@ -30,11 +30,7 @@
 	</div>
 </template>
 <script>
-import searchLists from "~/components/searchLists.vue"
-import exportLists from "~/components/exportLists.vue"
-import welcomeTab from "~/components/welcomeTab.vue"
 export default {
-	components:{searchLists, exportLists, welcomeTab},
 	data(){
 		return {
 			tabs:["Welcome", "Search Lists", "Export Lists"]
