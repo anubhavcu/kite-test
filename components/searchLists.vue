@@ -17,24 +17,25 @@
 			</div>
 		</div>
 
-		<div class='px-4 py-6 h-page max-w-big mx-auto border-t border-gray-200' v-if="!lists_loading && lists && lists.length">
+		<div class='py-6 h-page max-w-big mx-auto border-t border-gray-200' v-if="!lists_loading && lists && lists.length">
 			<div class='grid grid-cols-1 sm:grid-cols-3 gap-10'>
 				<div class='col-span-1 sm:col-span-2'>
 					<div class='flex justify-between items-center'>
-						<p class='text-sm text-gray-800'>{{lists.length}} {{lists.length==1 ? 'list': 'lists'}} found</p>
-						<!-- <button class='rounded-2xl py-1 px-3 bg-green-500 text-white text-xs font-semibold shadow' @click="openAll">Open All</button> -->
+						<p class='text-sm text-gray-800 mb-2'>{{lists.length}} {{lists.length==1 ? 'list': 'lists'}} found</p>
 					</div>
 					<div>
-						<div v-for="(l, index) in lists" :key='index'>
-						<div class="md:flex p-4 rounded border my-3 items-center" :class="[selected_lists.includes(l.link)?'bg-green-200 border-green-400 shadow':'bg-white border-gray-200', !selected_lists.includes(l.link)?'cursor-default bg-gray-200':'cursor-pointer']" @click="addRemoveList(l.link)">
-							<img class="border border-gray-400 h-10 w-10 md:h-16 md:w-16 rounded-full mx-auto md:mx-0 md:mr-6 shadow-inner" :alt="l.title" :src="l.image ? l.image : '/tw.png'">
-							<div class="text-center md:text-left">
-							  <h2 class="text-lg">{{l.title}}</h2>
-							  <a class="tw-color text-xs" :href="l.link" target="_blank">{{l.link}}</a>
-							  <div class="text-gray-600 text-xs">{{l.snippet}}</div>
+						<div v-for="(l, index) in lists" :key='index' class='mb-5 rounded overflow-hidden' :class="[selected_lists.includes(l.link)?'bg-green-200 border-green-400 shadow':'bg-white border-gray-200', !selected_lists.includes(l.link)?'cursor-default bg-gray-200':'cursor-pointer']" @click="addRemoveList(l.link)">
+							<div class="grid sm:grid-cols-10 p-4 gap-4 items-center">
+								<div class='sm:col-span-2 h-16 w-16 mx-auto md:mx-0 md:mr-6 shadow-inner border border-gray-400 rounded-full overflow-hidden'>
+									<img class="object-cover h-full w-full" :alt="l.title" :src="l.image ? l.image : '/tw.png'">
+								</div>
+								<div class="sm:col-span-8 text-center md:text-left">
+									<h2 class="sm:text-lg break-all">{{l.title}}</h2>
+									<a class="tw-color text-xs break-all" :href="l.link" target="_blank">{{l.link}}</a>
+									<div class="text-gray-600 text-xs break-all">{{l.snippet}}</div>
+								</div>
 							</div>
-						  </div>
-						</div>					
+							</div>					
 					</div>
 					<!-- <a class='rounded py-2 px-3 block text-center w-auto my-6 text-lg text-white bg-indigo-500 border border-indigo-600' target="_blank" :href="`https://google.com/search?q=site:https://twitter.com/i/lists/ OR site:twitter.com/*/lists ${searchTerm}`">Find more on Google</a> -->
 				</div>

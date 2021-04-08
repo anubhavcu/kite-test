@@ -1,12 +1,6 @@
 {
-	"version": 2,
-	"routes": [
-		{ "src": "/api/.*", "dest": "/api/serverless.js"}
-	],
-	"build": {
-		"env": {
-			"NODEJS_AWS_HANDLER_NAME":"handler",
-			"NODEJS_HELPERS":"0"
-		}
-	}
+	"rewrites": [
+        { "source": "\/api(.*)", "destination": "/api/serverless.js" }
+    ],
+	"trailingSlash": false
 }
