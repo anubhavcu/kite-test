@@ -1,6 +1,6 @@
 [
   {
-    "list": "https://twitter.com/handle/lists/list-name",
+    "list": "https://twitter.com/example_john_21/lists/list-name",
     "type": "subscriber",
     "handle": "example_john_21",
     "name": "John",
@@ -12,7 +12,7 @@
     "statuses": 0
   },
   {
-    "list": "https://twitter.com/handle/lists/list-name",
+    "list": "https://twitter.com/example_tim_53/lists/list-name",
     "type": "subscriber",
     "handle": "example_tim_53",
     "name": "Tim",
@@ -24,7 +24,7 @@
     "statuses": 2109
   },
   {
-    "list": "https://twitter.com/handle/lists/list-name",
+    "list": "https://twitter.com/example_sara_348/lists/list-name",
     "type": "subscriber",
     "handle": "example_sara_348",
     "name": "Sara",
@@ -36,7 +36,7 @@
     "statuses": 543
   },
   {
-    "list": "https://twitter.com/handle/lists/list-name",
+    "list": "https://twitter.com/example_olivia_45/lists/list-name",
     "type": "subscriber",
     "handle": "example_olivia_45",
     "name": "Olivia",
@@ -48,7 +48,7 @@
     "statuses": 252
   },
   {
-    "list": "https://twitter.com/handle/lists/list-name",
+    "list": "https://twitter.com/example_mia_36/lists/list-name",
     "type": "subscriber",
     "handle": "example_mia_36",
     "name": "Mia",
