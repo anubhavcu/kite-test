@@ -71,7 +71,7 @@ export default {
 	},
 	sitemap:{
 		hostname:process.env.KITELIST_BASE_URL,
-		exclude:['welcome']
+		exclude:['account']
 	},
 	tailwindcss: {
 		jit: true,
