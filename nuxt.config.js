@@ -55,16 +55,23 @@ export default {
 		color: '#fff'
 	},
 	css: [],
-	modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/sentry'],
+	modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/sentry', '@nuxtjs/sitemap'],
 	buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/proxy'],
 	plugins:[
 		{ src: '~/plugins/shared.js'},
 		{ src: '~/plugins/axios.client.js', mode:'client'},
 		{ src: '~/plugins/ga.client.js', mode:'client'}
 	],
+	router: {
+		trailingSlash: false
+	},
 	axios: {
 		retry: { retries: 3 },
 		baseURL: process.env.KITELIST_BASE_URL
+	},
+	sitemap:{
+		hostname:process.env.KITELIST_BASE_URL,
+		exclude:['welcome']
 	},
 	tailwindcss: {
 		jit: true,
