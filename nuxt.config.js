@@ -74,7 +74,6 @@ export default {
 		exclude:['account']
 	},
 	tailwindcss: {
-		jit: true,
 		configPath: '~/tailwind.config.js',
 		cssPath: '~/assets/tailwind.css',
 		purgeCSSInDev: false,
