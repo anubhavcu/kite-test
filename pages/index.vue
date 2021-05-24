@@ -55,8 +55,8 @@
             <rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
             <rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
           </svg>
-					<video height="340" controls controlsList="nodownload" class='relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md ring-0 focus:ring-0 focus:outline-none'>
-					<source src="https://media.publit.io/file/h_720/KiteList/kitelist.mp4" type="video/mp4">
+				<video height="340" controls controlsList="nodownload" class='relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md ring-0 focus:ring-0 focus:outline-none bg-blue-600 p-0.5 bg-opacity-90 overflow-hidden'>
+					<source src="/kitelist.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
         </div>
