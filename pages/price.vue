@@ -39,7 +39,7 @@
                 Best for <b>freelancers</b> and companies requiring few exports each month
               </p>
             </div>
-            <div class="flex-1 bg-gray-50 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
+            <div class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
               <ul class="space-y-4">
                 <li class="flex items-start" v-for="x in ['15 Exports per month', 'Unlimited Searches', 'Export all members', 'Export all subscribers']" :key="x">
                   <div class="flex-shrink-0">
