@@ -73,7 +73,7 @@ const fn = module.exports = {
 		let postMarkEndpoint = "https://api.postmarkapp.com/email"
 		
 		const data = {
-			From: "team@kitelist.com",
+			From: "support@kitelist.com",
 			To: fn.validate_email(to_email)
 		}
 

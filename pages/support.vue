@@ -73,7 +73,7 @@
             I have another question, how can I reach out?
           </dt>
           <dd class="mt-2 text-base text-gray-500">
-			  Please email us at team@kitelist.com or use the contact form below
+			  Please email us at support@kitelist.com or use the contact form below
 		   </dd>
         </div>
       </dl>
