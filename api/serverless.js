@@ -1,5 +1,5 @@
 "use strict";
-const awsLambdaFastify = require('aws-lambda-fastify')
+const serverless = require('serverless-http')
 const fastify = require('fastify')
 const axios = require("axios")
 const isProd = process.env.NODE_ENV === "production"
@@ -504,5 +504,5 @@ app.listen(3030, (err) => {
 })
 } else {
 // required as a module => executed on aws lambda
-exports.handler = awsLambdaFastify(app)
+exports.handler = serverless(app)
 }
