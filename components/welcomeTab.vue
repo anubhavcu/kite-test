@@ -12,7 +12,7 @@
 			</div>
 			<div>
 				<video height="340" controls controlsList="nodownload" class='border-4 border-gray-900 shadow-lg rounded-lg overflow-hidden ring-0 focus:ring-0 focus:outline-none'>
-					<source src="https://media.publit.io/file/h_720/KiteList/kitelist.mp4" type="video/mp4">
+					<source src="/kitelist.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 			</div>
@@ -25,7 +25,7 @@
 						</li>
 						<li class='mt-4'>
 							<b>Export Subscribers & Members:</b><br>
-							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="$store.commit('UPDATE_STORE', {tabIndex:2})">Export Tool</span> to export all members and subscribers of your lists</p>
+							<p class='ml-5'>Use our <span class='text-blue-800 underline cursor-pointer' @click="$store.commit('UPDATE_STORE', {tabIndex:2})">Export Tool</span> to export all members and subscribers of your lists </p>
 						</li>
 						<li class='mt-4'>
 							<b>Upload the CSV to Twitter Ads:</b><br>

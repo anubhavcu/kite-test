@@ -2,7 +2,7 @@
   <div class='h-page flex px-4'>
 	  <div class='mx-auto my-8 p-10 bg-white rounded shadow md:w-4/6 border-gray-200'>
 		  <h1 class='font-semibold text-2xl'>The table below is a demo of how our exports look like</h1>
-		  <h2>All our exports contain all the data you see in the table below</h2>
+		  <h2>For a better export preview try a download, if you are not satisfied we can refund you immediately!</h2>
 		  <div class="mt-6">
 			  <div id="table-wrapper" class='w-full overflow-auto bg-gray-100'>
 				  <table class="table-auto border border-gray-200 rounded-lg">

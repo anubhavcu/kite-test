@@ -70,6 +70,15 @@
 
         <div>
           <dt class="text-lg leading-6 font-medium text-gray-900">
+            What if I already have a list I want to export?
+          </dt>
+          <dd class="mt-2 text-base text-gray-500">
+			Great! You don't need to use our search engine if you already have a list. Simply head to <nuxt-link to="/app" class='underline text-blue-700'>our app</nuxt-link>, click on the export tab and paste the list link!	  
+		</dd>
+        </div>
+
+        <div>
+          <dt class="text-lg leading-6 font-medium text-gray-900">
             I have another question, how can I reach out?
           </dt>
           <dd class="mt-2 text-base text-gray-500">

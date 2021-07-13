@@ -19,24 +19,21 @@
 				<div class=" mb-6">
 					<label class='block'>
 						<input class="mr-2" type="radio" value="0" v-model.number="product">
-						<span> All subscribers <span v-show="!$auth.loggedIn">for 19$</span></span>
+						<span> All subscribers</span>
 					</label>
 					<label class='block'>
 						<input class="mr-2" type="radio" value="1" v-model.number="product">
-						<span> All members <span v-show="!$auth.loggedIn">for 19$</span> </span>
+						<span> All members</span>
 					</label>
 					<label class='block'>
 						<input class="mr-2" type="radio" value="2" v-model.number="product">
-						<span> All members and all subscribers <span v-show="!$auth.loggedIn">for 29$</span> </span>
+						<span> All members and all subscribers</span>
 					</label>
 				</div>
 			</div>
 		
 			<div>
-				<button class='rounded shadow border border-teal-600 text-lg font-bold uppercase bg-green-600 text-white text-center w-full py-3 px-3' @click=download>Download</button>
-				<p class='text-sm text-center text-gray-800 mt-2' v-show="!$auth.loggedIn">
-					Not happy with the results? We refund you immediately!
-				</p>				
+				<button class='rounded shadow border border-teal-600 text-lg font-bold uppercase bg-green-600 text-white text-center w-full py-3 px-3' @click=download>Download</button>				
 			</div>
 		</div>
 	</div>
@@ -76,33 +73,20 @@ export default {
 			if (this.$auth.loggedIn){
 				this.downloadLeads()
 			} else {
-				this.pay()
+				alert("You need to login to export these lists!")
+				this.$router.push("/price")
+				// this.pay()
 			}
 		},
-		pay() {
-			const vm = this
-			if (this.$ga){
-				this.$ga.event('purchase', 'open-checkout', this.product, 0)
-			}
-			Paddle.Setup({ vendor: 27713, debug: false })
-			const prod = this.product==2 ? 577738 : 577737
-			Paddle.Checkout.open({
-				product: prod,
-				allowQuantity: false,
-				title: 'KiteList Export',
-				message: 'Your CSV will be immediately downloaded! This is a one time fee.',
-				disableLogout: true,
-				successCallback:(paddleData) => { vm.downloadLeads(paddleData) }
-			})
-    	},
-		async downloadLeads(paddleData){
+
+		async downloadLeads(){
 			const links = this.storeLists.filter(list => list.startsWith("https://twitter.com"))
 			if (!links.length){
 				alert("You need to pass at least one valid link!")
 				return;
 			}
 			this.downloading = true
-			const r = await this.$axios.$post("/api/leads", {download:this.product, links:links, paddle_data:paddleData})
+			const r = await this.$axios.$post("/api/leads", {download:this.product, links:links})
 			.catch(e => this.downloading = false)
 			this.downloading = false
 			if ("url" in r) {
