@@ -37,7 +37,7 @@ app.register(require('fastify-rate-limit'), {
 })
 
 // Form body (for Paddle webhooks)
-app.register(require('fastify-formbody'))
+// app.register(require('fastify-formbody'))
 
 // Decorate request (https://github.com/fastify/fastify/issues/1555)
 app.decorateRequest('user', null)
@@ -389,18 +389,15 @@ app.route({
 						type:"string",
 						pattern: "^https://twitter.com/"
 					}
-				},
-				paddle_data:{
-					type:"object"
 				}
 			}
 		}
 	},
 	handler: async (request, reply) => {
-		const {download, links, paddle_data} = request.body
+		const {download, links} = request.body
 		const {user} = request
 
-		if (!user && !(paddle_data && paddle_data.checkout)) {
+		if (!user) {
 			throw new Error ("400::Please Login to do this")
 		}
 

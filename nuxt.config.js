@@ -47,8 +47,7 @@ export default {
 		],
 		link: [
 			{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-		],
-		script: [ { src: 'https://cdn.paddle.com/paddle/paddle.js' } ]
+		]
 	},
 	googleAnalytics: { id: 'UA-153958572-1'},
 	loading: {
