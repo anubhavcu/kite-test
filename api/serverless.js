@@ -5,8 +5,6 @@ const axios = require("axios")
 const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
 const jwt = require('jsonwebtoken');
-const { set_user_or_null, sendEmail, delete_one } = require('./_fn.js');
-const { default: formBodyPlugin } = require('fastify-formbody');
 const Sentry = require("@sentry/node");
 
 const crypto = require('crypto');
@@ -87,6 +85,70 @@ app.setErrorHandler(async (error, req, reply) => {
 // Routes
 
 
+app.route({
+	url:"/api/test",
+	method:["GET"],
+	handler: async (request, reply) => {
+		const lists = await fn.get_many("cached_searches")
+		const lengths = lists.map(l => JSON.parse(l.lists).length)
+		return lengths.reduce((a, b) => a + b, 0)
+	}
+})
+
+app.route({
+	url:"/api/billing",
+	method:["POST", "PUT"],
+	handler: async (request, reply) => {
+		if (request.method === "POST") { // Stripe
+			const {body} = request
+			const stripe = body.data.object
+
+			if (!['customer.subscription.deleted', 'checkout.session.completed'].includes(body.type)){
+				return "endpoint not in use"
+			}
+
+			if (body.type === "customer.subscription.deleted"){
+				const user = await fn.get_one("users", ["billing.stripe_customer", "==", stripe.customer])
+				if (!user){
+					throw new Error("400::We can't update this customer because we didn't find it in the database")
+				}
+				await fn.update_one("users", user.id, {...user.billing, cancel_at:stripe.cancel_at, plan:"deleted"})
+			}
+
+			else { // most likely create a new customer
+				const stripe_email = stripe.customer_details.email
+				const email = fn.validate_email(stripe_email)
+				const new_billing = {
+					stripe_customer:stripe.customer,
+					stripe_mode:stripe.mode,
+					plan:stripe.mode==='subscription' ? 'subscription' : 'lifetime',
+					stripe_subscription: body.type==="customer.subscription.updated" ? stripe.id : stripe.subscription,
+					cancel_at:stripe.cancel_at || null
+				}
+				
+				const user = await fn.get_one("users", ["email", "==", email])
+				if (user){ // Update him
+					await fn.update_one("users", user.id, {...user.billing, ...new_billing})
+					
+				} else { // Create him
+					await fn.add_one("users", {email: email, created_at:fn.timestamp_sc(), billing:new_billing})
+				}
+			}
+			return "Customer updated or created. Thanks"
+		}
+		else if (request.method === "PUT"){ // Show billing portal
+			await fn.set_user(request)
+			const user = await fn.get_id("users", request.user.id)
+			const data = `customer=${user.billing.stripe_customer}&return_url=${process.env.KITELIST_BASE_URL + "/account"}`
+			const headers = {
+				"Authorization":`Bearer ${process.env.STRIPE_PRIVATE_KEY}`,
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+			const portal = await axios.post("https://api.stripe.com/v1/billing_portal/sessions", data, {headers}).then(r => r.data)
+			return portal.url
+		}
+	}
+})
 
 app.route({
 	url:"/api/get-profile/:screen_name/:type",
@@ -126,84 +188,6 @@ app.route({
 
 
 app.route({
-	url:"/api/clear-bucket",
-	method:["GET"],
-	schema:{
-		summary:"Deletes all old files in the bucket",
-		description: "Deletes all old files"
-	},
-	handler: async (request, reply) => {
-		// This function is no longer needed because
-		// kitelist_csv_files automatically deletes all files older than 1 day
-		// Using the lifecycle policy
-		throw new Error("400::This endpoint is not in use anymore")
-		const bucket = await fn.connectToBucket()
-		const [files] = await bucket.getFiles();
-		const now = fn.timestamp_sc()
-		let count = 0
-		for (const file of files){
-			const {name} = file
-			const arr = name.replace(".csv", "").split("_")
-			const created_at = parseInt(arr[arr.length - 1])
-			if ((now - created_at) > (24 * 3600)) { // 24 Hours in seconds
-				await bucket.file(name).delete();
-				console.log(`${name} was just deleted`)
-				count += 1
-			}
-		}
-		return `There were ${files.length} files. I've deleted ${count}. Total files remaining: ${files.length - count}`
-	}
-})
-
-
-app.route({
-	url:"/api/admin/:action",
-	method:["POST"],
-	handler: async (request, reply) => {
-		const action = request.params.action
-		const {password} = request.body
-		if (request.raw.method !== "POST" || password !== "25736dh%WGH@%@*&@GSH928"){
-			throw new Error("400::Not Allowed")
-		}
-		switch (action) {
-			case 'users':
-				const users = await fn.get_many("users")
-				return users.map(user => ({
-					email:user.email,
-					created_at:user.created_at,
-					codes: ((user.billing || {}).codes || []).join(", ")
-				}))
-			default:
-				throw new Error("400::Action not found")
-		}
-	}
-})
-
-
-app.route({
-	url:"/api/free-code/:email",
-	method:["GET"],
-	handler: async (request, reply) => {
-		const password = request.query.password
-		if(password !== "ks21"){
-			throw new Error ("400::You can't do this. The password is wrong!")
-		}
-		const email = fn.validate_email(request.params.email)
-		const user = await fn.get_one("users", ["email", "==", email])
-		if (!user){
-			throw new Error("400::This user doesn't exists")
-		}
-		const codes = (user.billing || {}).codes || []
-		if (codes.length !==1){
-			throw new Error (`400::This user has ${codes.length} codes. You can't add more`)
-		}
-		const billing = { ...user.billing, codes:[...codes, "free-code"] }
-		await fn.update_one("users", user.id, {billing:billing})
-		return `We have added one free code to the user ${email}`
-	}
-})
-
-app.route({
 	url: "/api/auth",
 	method: ["POST", "GET"],
 	preHandler:[fn.set_user_or_null],
@@ -214,10 +198,7 @@ app.route({
 	},
 	handler: async (request, reply) => {
 		if (request.raw.method === "GET"){
-			if (!request.user || !request.user.id){
-				return null;
-			}
-			return await fn.get_id("users", request.user.id)
+			return request?.user?.id ? await fn.get_id("users", request.user.id) : null
 		}
 
 		else if (request.raw.method === "POST") {
@@ -297,7 +278,7 @@ app.route({
 		const last24h = now - 86400
 		const all_searches = await fn.get_many("cached_searches", ['created_at', ">", last24h]) || []
 		if (all_searches.length > 1000){
-			throw new Error("400::The system is over it's capacity. Please try again later")
+			throw new Error("400::The system is over it's capacity. Please try again in 24 hours")
 		}
 		// Find lists on top 5 pages
 		let lists = []
@@ -373,7 +354,7 @@ app.route({
 app.route({
 	url: "/api/leads",
 	method: ["POST"],
-	preHandler:[set_user_or_null],
+	preHandler:[fn.set_user],
 	schema:{
 		body:{
 			required:['download', 'links'],
@@ -397,25 +378,25 @@ app.route({
 		const {download, links} = request.body
 		const {user} = request
 
-		if (!user) {
-			throw new Error ("400::Please Login to do this")
-		}
-
 		const today = new Date()
 		const date = `${today.getFullYear()}_${today.getMonth()}`
-		let download_counter = {}
-		let current_downloads = 0;
 
-		if (user){
-			// Check if goes above the limit
-			const db_user = await fn.get_id("users", request.user.id)
-			if (!db_user){
-				throw new Error("400::This user was not found in the database")
-			}
-			const codes = db_user.billing.codes || []
-			const max_downloads = codes.length > 1 ? null : 15
-			download_counter = db_user.download_counter || {}
-			current_downloads = download_counter[date] || 0
+		// Check if goes above the limit
+		const db_user = await fn.get_id("users", request.user.id)
+		if (!db_user){
+			throw new Error("400::This user was not found in the database")
+		}
+		const plan = db_user?.billing?.plan
+		if (plan === "deleted"){
+			throw new Error("400::This account has been deleted. Please email us if you think it's a mistake!")
+		}
+
+		let download_counter = db_user.download_counter || {}
+		const current_downloads = download_counter[date] || 0
+
+		const codes = db_user?.billing?.codes || []
+		if (plan === "AppSumo" && codes.length === 1){ // Light AppSumo plans are restricted to 15 downloads a month
+			const max_downloads = 15
 			if (max_downloads && (current_downloads > max_downloads)){
 				throw new Error("400::You have reached your monthly download limit. The limit will reset at the beginning of next month")
 			}
@@ -481,11 +462,8 @@ app.route({
 		// Storage
 		const url = await fn.json2CsvUrl(apiData, 'list')
 		// Update user limits
-		if (user){
-			// Add this download 
-			download_counter[date] = current_downloads + 1
-			await fn.update_one("users", user.id, {download_counter:download_counter})
-		}
+		download_counter[date] = current_downloads + 1
+		await fn.update_one("users", user.id, {download_counter:download_counter})
 		return {url:url}
 	}
 })

@@ -65,7 +65,7 @@ export default {
 		trailingSlash: false
 	},
 	axios: {
-		retry: { retries: 3 },
+		retry: { retries: 0 },
 		baseURL: process.env.KITELIST_BASE_URL
 	},
 	sitemap:{

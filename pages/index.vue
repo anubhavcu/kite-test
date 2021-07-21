@@ -26,7 +26,7 @@
           </h1>
           <div class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
 			  <p>Kitelist allows you target Twitter Ads to any subscriber of public Twitter lists.</p>
-			  <p class="mt-4">We have a database of over <span class='text-pink-600 font-black'>10.000</span> Twitter lists in any niche or market. <b class="font-bold text-pink-600">You can target them all!</b></p>
+			  <p class="mt-4">We have a database of over <span class='text-pink-600 font-bold'>20.000</span> Twitter lists in any niche or market. <b class="font-semibold text-pink-600">You can target them all!</b></p>
 		  </div>
           <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
             <p class="text-base font-medium text-gray-900"> Start by searching your niche: </p>

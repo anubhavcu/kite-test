@@ -41,7 +41,7 @@
             </div>
             <div class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
               <ul class="space-y-4">
-                <li class="flex items-start" v-for="x in ['15 Exports per month', 'Unlimited Searches', 'Export all members', 'Export all subscribers']" :key="x">
+                <li class="flex items-start" v-for="x in ['Unlimited exports', 'Unlimited Searches', 'Export all members', 'Export all subscribers']" :key="x">
                   <div class="flex-shrink-0">
                     <!-- Heroicon name: outline/check -->
                     <svg class="h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

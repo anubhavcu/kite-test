@@ -19,9 +19,11 @@
 			</ul>
 		</div>
 
-		<a href="https://appsumo.com/marketplace-kitelist-targeted-twitter-ads/" target="_blank" class='block bg-yellow-400 text-green-800 border-4 text-lg max-w-2xl p-3 rounded shadow mt-10 mb-6 border-green-800' v-if="showBuyMore">
-			Buy one more AppSumo code and get upgraded to the PRO plan, which includes unlimited exports per month!
-		</a>
+		<div v-if="infos.plan === 'subscription'" class='my-6'>
+			<p class='font-bold'>Update your subscription</p>
+			<p>You can update or cancel your subscription at any time by clicking the button below</p>
+			<button class='btn mt-2' @click="loadPortal">Update Subscription</button>
+		</div>
 
 	</div>
 </template>
@@ -37,33 +39,28 @@ export default {
 		this.$auth.fetchUser()
 	},
 	computed: {
-		showBuyMore(){
-			return this.infos['Exports Per Month'] === 15
-		},
 		infos(){
 			const user = this.$auth.user
 			const billing = user.billing || {}
-			
-			if (user.billing.plan !== "AppSumo"){
-				return {
-					email:user.email,
-					plan:"KiteList Monthly Subscription",
-					"Searches Per Month":"Unlimited",
-				}
-			}
-
+			const download_counter = user.download_counter || {}
+			const restricted = user.billing.plan === "AppSumo" && billing.codes.length === 1
 			const today = new Date();
 			const date = `${today.getFullYear()}_${today.getMonth()}`
-			const download_counter = user.download_counter || {}
-			const downloads = download_counter[date] || 0
 			return {
 				email:user.email,
 				plan:billing.plan,
-				"Searches Per Month":"Unlimited",
-				"Total Exports Done this month":downloads,
-				"Allowed Exports Per Month": (billing.codes || []).length > 1 ? "Unlimited" : 15,
-				"Next Renewal":"Never",
+				"Searches Per Month": "Unlimited",
+				// "Exports":restricted ,
+				"cancel at":billing.cancel_at ? new Date(billing.cancel_at) : '-',
+				exports: `${download_counter[date] || 0} / ${restricted ? 15 : 'Unlimited'}`
 			}
+		}
+	},
+
+	methods:{
+		async loadPortal(){
+			const portal = await this.$axios.$put("/api/billing")
+			window.location.href = portal
 		}
 	}
 }

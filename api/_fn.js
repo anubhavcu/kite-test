@@ -100,14 +100,12 @@ const fn = module.exports = {
 
 			if (v == 'bucket'){
 				const storage = new Storage({projectId: process.env.KITELIST_FIREBASE_PROJECT_ID, credentials:firebaseCredentials})
-				fireCache[v] = storage.bucket("kitelist_csv_files") 
-				// kitelist_csv_files automatically deletes all files older than 1 day
+				fireCache[v] = storage.bucket("kitelist_csv_files")  // kitelist_csv_files automatically deletes all files older than 1 day
 				return fireCache[v]
 			}
 
 			else if (v == 'db') {
 				fireCache[v] = new Firestore({projectId: process.env.KITELIST_FIREBASE_PROJECT_ID, credentials:firebaseCredentials})
-				console.log("FIREBASE")
 				return fireCache[v]
 			}
 		},
@@ -172,19 +170,9 @@ const fn = module.exports = {
 
 	async get_id(collection_name, id) {
 		// Returns the object without ID if it can't find it returns null
-		// const cache_id = `${collection_name}-${id}`
-		// const cached = false// myCache.get( cache_id )
-		// if (cached){
-		// 	console.log("mem cache")
-		// 	return cached
-		// }
-		// console.log("FROM db...", `${collection_name}-${id}`)
 		const db = fn.connectToDatabase()
 		const item = await db.collection(collection_name).doc(id).get()
 			.then(v =>  v.data() || null)
-		if (item){
-			// myCache.set( `${collection_name}-${id}`, item)
-		}
 		return item
 	},
 
