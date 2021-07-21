@@ -1,6 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
+	experimental: 'all',
 	mode: 'jit',
 	theme: {
 		extend: {
@@ -16,13 +17,6 @@ module.exports = {
 		enabled: process.env.NODE_ENV === "production",
 		options: {
 			safelist: ['loading']
-		},
-		content:[
-			"~/components/**/*.{vue,js}",
-			"~/layouts/**/*.vue",
-			"~/pages/**/*.vue",
-			"~/plugins/**/*.{js,ts}",
-			"~~/nuxt.config.{js,ts}"
-		]
+		}
 	}
 }

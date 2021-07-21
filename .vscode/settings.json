@@ -5,12 +5,13 @@
 		".nuxt/": true,
 		".vercel/":true,
 		"**/._*": true,
-		".gitignore":false,
+		".gitignore":true,
 		"package-lock.json":true,
 		".npmrc":true,
 		".editorconfig":true,
 		"netlify.toml":true,
-		"vercel.json":true,
-		"jsconfig.json":true
+		"vercel.json":false,
+		"jsconfig.json":true,
+		".env":true
 	}
 }

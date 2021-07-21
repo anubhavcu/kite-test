@@ -1,0 +1,118 @@
+
+.my-form{
+	@apply appearance-none py-3 px-4 bg-gray-50 border border-gray-200 text-base text-gray-700 rounded;
+}
+.btn {
+	@apply appearance-none cursor-pointer py-3 px-4 bg-black text-base text-white rounded leading-tight;
+}
+.my-form:focus, button:focus{
+	outline:0;
+	@apply border-blue-400;
+}
+.middle{
+	@apply flex justify-center items-center;
+}
+
+.small-error{
+	@apply bg-red-100 rounded p-3 border border-red-700 text-red-700 text-sm;
+}
+
+.h-page { /* PAGE LESS NAVBAR */
+	min-height: calc(100vh - 3rem);
+}
+
+.min-h-70vh{
+	min-height: 70vh;
+}
+
+.tw-bg{
+	background: #1da1f2;
+}
+.tw-color{
+	color: #1da1f2;
+}
+
+.max-w-big{
+	max-width: 100rem;
+}
+
+.nuxt-link-exact-active{
+	@apply text-pink-600 cursor-auto;
+}
+
+./*eye ball LOADER*/
+.eye{
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    box-shadow: 30px 0px 0px 0px rgba(255,255,255,0.8);
+    position: relative;
+    margin: 36px 26px;
+}
+
+.eye:after{
+    background-color: #59488b;
+    width: 10px;
+    height: 10px;
+    box-shadow: 30px 0px 0px 0px #59488b;
+    border-radius: 50%;
+    left: 9px;
+    top: 8px;
+    position: absolute;
+    content: "";
+    -webkit-animation: eyeball 2s linear infinite alternate;
+       -moz-animation: eyeball 2s linear infinite alternate;
+            animation: eyeball 2s linear infinite alternate;
+}
+@-webkit-keyframes eyeball{
+    0%{left: 9px;}
+    100%{left: 1px;}
+}
+@-moz-keyframes eyeball{
+    0%{left: 9px;}
+    100%{left: 1px;}
+}
+@keyframes eyeball{
+    0%{left: 9px;}
+    100%{left: 1px;}
+}
+
+
+.disabled{
+	@apply cursor-not-allowed pointer-events-none select-none bg-opacity-75;
+}
+
+.loading {
+	color: transparent !important;
+	pointer-events: none;
+	position: relative;
+	&:after {
+	  animation: spinAround 500ms infinite linear;
+	  border: 2px solid #dbdbdb;
+	  border-radius: 290486px;
+	  border-right-color: transparent;
+	  border-top-color: transparent;
+	  content: '';
+	  display: block;
+	  width: 1em;
+	  height: 1em;
+	  left: calc(50% - (1em / 2));
+	  top: calc(50% - (1em / 2));
+	  position: absolute !important;
+	}
+  }
+  
+  .loading-spinner {
+	&:after {
+	  animation: spinAround 500ms infinite linear;
+	  border: 2px solid #dbdbdb;
+	  border-radius: 290486px;
+	  border-right-color: transparent;
+	  border-top-color: transparent;
+	  content: '';
+	  display: inline-flex;
+	  width: 1em;
+	  height: 1em;
+	}
+  }

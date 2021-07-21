@@ -106,5 +106,10 @@ export default {
 		extend(config, ctx) {			
 		}
 	},
+	generate: {
+		exclude: [
+		  /^\/api\// // path starts with /api/ - Otherwise they get generated and it return a 404
+		]
+	}
 
 }
