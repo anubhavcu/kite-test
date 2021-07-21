@@ -40,6 +40,7 @@
 						</svg>
 						<h2 class="text-4xl font-bold text-green-600"> Email sent! </h2>
 						<h3 class="text-xl mt-3 text-green-500"> Click on the link in your <span class='text-emerald-500 font-semibold tracking-wide'>{{email}}</span> inbox to login.</h3>
+						<div class='bg-yellow-300 text-center border-t-8 border-b-8 border-yellow-400 text-black rounded p-2 text-sm mt-3 font-semibold'>Check your spam folder!</div>
 					</div>
 				</div>
 

@@ -141,7 +141,7 @@ app.route({
 			const user = await fn.get_id("users", request.user.id)
 			const data = `customer=${user.billing.stripe_customer}&return_url=${process.env.KITELIST_BASE_URL + "/account"}`
 			const headers = {
-				"Authorization":`Bearer ${process.env.STRIPE_PRIVATE_KEY}`,
+				"Authorization":`Bearer ${process.env.KITELIST_STRIPE_PRIVATE_KEY}`,
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
 			const portal = await axios.post("https://api.stripe.com/v1/billing_portal/sessions", data, {headers}).then(r => r.data)
@@ -170,7 +170,8 @@ app.route({
 			return "Sorry. This endpoint is not available in production"
 		}
 		const {screen_name, type} = request.params
-		const token = process.env.RANDOM_TWITTER_TOKEN
+		const token = process.env.KITELIST_TWITTER_API_KEY
+
 		let users = []
 		const url = `https://api.twitter.com/1.1/${type}/list.json?screen_name=${screen_name}`
 		const payload = {count: "200", include_entities:false, skip_status:true}
@@ -231,12 +232,12 @@ app.route({
 				const shortLifeToken = jwt.sign({ data: { email: email } }, jwt_secret, { expiresIn: '1h' })
 				const tokenUrl = `${body.url || process.env.KITELIST_BASE_URL}/auth?token=${shortLifeToken}`
 
-				if (!isProd) {
+				if (false && !isProd) {
 					console.log('\x1b[36m', `In production we would email: ${email} the link:`, '\x1b[32m', `${tokenUrl}`, '\x1b[0m');
 					return { status: "Ok" }
 				} else {
-					const html = " <p><h1>Hey there!</h1><br><br>Use this link to login: <br><br> <a href='login_link'>login_link</a></p>".replace(/login_link/g, tokenUrl)
-					const email_sent = await fn.sendEmail(email, null, null, html)
+					const email_sent = await fn.sendLoginEmail(email, tokenUrl)
+					console.log({email_sent})
 					if (!email_sent) {
 						throw new Error(`400::There was an error sending the login email to ${email}`)
 					}

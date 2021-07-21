@@ -68,31 +68,28 @@ const fn = module.exports = {
 		return lower_email
 	},
 
-	async sendEmail(to_email, template_alias, template_config, plain_html) {
-		const headers = {"X-Postmark-Server-Token":process.env.KITELIST_POSTMARK_API_KEY}
-		let postMarkEndpoint = "https://api.postmarkapp.com/email"
-		
+	async sendLoginEmail(to, login_link){
 		const data = {
-			From: "support@kitelist.com",
-			To: fn.validate_email(to_email)
+			"Messages":[
+				{
+					"From": { "Email": "support@kitelist.com", "Name": "KiteList Support" },
+					"To": [ { "Email": to} ],
+					"TemplateID": 3057094,
+					"TemplateLanguage": true,
+					"Subject": "Login to KiteList",
+					"Variables": {login_link}
+				  }
+			]
 		}
+		return await axios.post('https://api.mailjet.com/v3.1/send', data, {auth:{username:process.env.KITELIST_MAILJET_USERNAME, password:process.env.KITELIST_MAILJET_PASSWORD}})
+		.then(r => true)
+		.catch(e => {
+			console.log("Email Sending Error")
+			console.log(e.message, e?.response?.data)
+			return false
+		})
+	},
 
-		if (template_alias){ // it uses a template
-			postMarkEndpoint += "/withTemplate"
-			data.TemplateAlias = template_alias,
-			data.TemplateModel = template_config
-		} 
-		
-		else {
-			// It's a plain HTML email
-			data.HtmlBody = plain_html
-			data.Subject = "KiteList Login link"
-		}
-
-		return await axios.post(postMarkEndpoint, data, {headers:headers})
-						.then(r => true).catch(e => false)
-	},	
-	
 	get_firebase(v) {
 			if (fireCache[v]) {
 				return fireCache[v]
