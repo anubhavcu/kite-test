@@ -232,7 +232,7 @@ app.route({
 				const shortLifeToken = jwt.sign({ data: { email: email } }, jwt_secret, { expiresIn: '1h' })
 				const tokenUrl = `${body.url || process.env.KITELIST_BASE_URL}/auth?token=${shortLifeToken}`
 
-				if (false && !isProd) {
+				if (!isProd) {
 					console.log('\x1b[36m', `In production we would email: ${email} the link:`, '\x1b[32m', `${tokenUrl}`, '\x1b[0m');
 					return { status: "Ok" }
 				} else {

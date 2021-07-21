@@ -26,6 +26,7 @@
 						</div>
 						<button
 							type="submit"
+							:class="{loading:loading_send}"
 							class="shadow-lg w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-800 focus:outline-none focus:bg-emerald-400 transition duration-150 ease-in-out">
 							Send Magic Link
 						</button>
@@ -63,7 +64,7 @@ export default {
 	},
 		data() {
 			return {
-				sent_email:'',
+				loading_send:false,
 				email: '',
 				miele: '',
 				error: null,
@@ -91,23 +92,14 @@ export default {
 			}
 		},
 		methods: {
-			sendMagicLink() {
+			async sendMagicLink() {
 				this.error = null
 				if (this.miele.length) {
 					this.error = "Bots not allowed!";
 					return;
 				}
-				if (this.email === this.sent_email){ 
-					// Avoids submitting twice when user clicks fast
-					return;
-				}
-				const valid = /\S+@\S+\.\S+/.test(this.email)
-				if (!valid){
-					this.error = `${this.email} is not a valid email address`
-					return;
-				}
-				this.sent_email = this.email
-				this.$axios.post('/api/auth', {
+				this.loading_send = true
+				await this.$axios.post('/api/auth', {
 						email: this.email,
 						url: window.location.origin
 					})
@@ -118,6 +110,7 @@ export default {
 						this.error = this.errorMsg(e)
 						this.loginStep = 1
 					})
+				this.loading_send = false
 			},
 			go_to_app(){
 				this.$router.push({path: "/app", query: {} })
