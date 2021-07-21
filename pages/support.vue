@@ -96,10 +96,10 @@
 			<input type="text" name="email" placeholder="Your Email" class='my-form block w-full mb-2 shadow-sm' />
 			<textarea name="message" rows="10" class='my-form block w-full mb-2 shadow-sm' placeholder="Your Message"></textarea>
 			<input type="text" name="honeypot" style="display:none">
-			<input type="hidden" name="accessKey" value="0668dc0c-d70a-44e1-9b31-d26f3f9233a9">
+			<input type="hidden" name="accessKey" :value="$config.KITELIST_STATIC_FORMS_KEY">
 			<input type="hidden" name="subject" value="kitelist Support Email" />
 			<input type="hidden" name="replyTo" value="@">
-			<input type="hidden" name="redirectTo" value="https://kitelist.com/support?sent=true">
+			<input type="hidden" name="redirectTo" :value="`${$config.KITELIST_BASE_URL}/support?sent=true`">
 			<input type="submit" value="Submit" class='btn bg-blue-800 text-white uppercase w-full block text-center font-semibold mt-6' />
 		</form>		
 	</div>

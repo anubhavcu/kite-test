@@ -12,6 +12,6 @@
 		"netlify.toml":true,
 		"vercel.json":false,
 		"jsconfig.json":true,
-		".env":true
+		".env":false
 	}
 }

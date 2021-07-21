@@ -8,12 +8,11 @@ export default {
 	target: 'static',
 	telemetry: false,
 	components: true,
-	publicRuntimeConfig: {}, // Available in the frontend
-	privateRuntimeConfig: {
-		KITELIST_BASE_URL: process.env.KITELIST_BASE_URL, //process.env.VERCEL_URL || process.env.KITELIST_BASE_URL,
-		KITELIST_SENTRY_NUXT: process.env.KITELIST_SENTRY_NUXT,
-		NODE_ENV: process.env.NODE_ENV
+	publicRuntimeConfig: { // Available in the frontend
+		KITELIST_BASE_URL:process.env.KITELIST_BASE_URL,
+		KITELIST_STATIC_FORMS_KEY:process.env.KITELIST_STATIC_FORMS_KEY
 	},
+	privateRuntimeConfig: {},
 	head: {
 		title: 'Kite List | Twitter Lists Search Engine & Exporter',
 		meta: [
