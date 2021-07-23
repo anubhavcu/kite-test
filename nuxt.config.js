@@ -14,6 +14,7 @@ export default {
 	},
 	privateRuntimeConfig: {},
 	head: {
+		htmlAttrs: { lang: 'en' },
 		title: 'Kite List | Twitter Lists Search Engine & Exporter',
 		meta: [
 			{

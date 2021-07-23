@@ -2,7 +2,7 @@
 	"name": "kitelist",
 	"version": "1.0.0",
 	"description": "KiteList",
-	"author": "cosbgn",
+	"author": "kitelist",
 	"private": true,
 	"engines": {
 		"node": ">=14.6"
