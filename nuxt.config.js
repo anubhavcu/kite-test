@@ -45,7 +45,7 @@ export default {
 			}
 		],
 		link: [
-			{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+			{rel: 'icon', type: 'image/x-icon', href: 'https://emojicdn.elk.sh/🪁' }
 		]
 	},
 	googleAnalytics: { id: 'UA-153958572-1'},
