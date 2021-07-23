@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const Sentry = require("@sentry/node");
 
 const crypto = require('crypto');
+const { refund } = require('vue-gtag');
 const hash = (string) => crypto.createHash('sha256').update(string, 'utf8').digest('hex');
 
 const app = fastify({
@@ -358,6 +359,35 @@ app.route({
 	}
 })
 
+app.route({
+	url: "/api/appsumo/refunds",
+	method: ["GET"],
+	schema:{
+		summary:"Changes the user status for those who refunded codes",
+		description: 'Refunds users',
+		tags: ['settings']
+	},
+	handler: async (request) => {
+		if (isProd){
+			throw new Error("400::Sorry you can't do this in production")
+		}
+		// Download codes from appsumo and paste them on convertcsv.com/csv-to-json.htm (CSV to JSON array)
+		const refunded_codes = require("./_refunded_codes.json")
+
+		let count = 0
+		const all_users = await fn.get_many("users")
+
+		for (const user of all_users){
+			const codes = user.billing.codes || []
+			const valid_codes = codes.filter(code => !refunded_codes.includes(code))
+			if (!valid_codes.length && user?.billing?.plan === "AppSumo"){
+				count++
+				await fn.update_one("users", user.id, {"billing.plan":"refunded"})
+			}
+		}
+		return `Refunded ${count} users` 
+	}
+})
 
 
 app.route({
@@ -396,8 +426,8 @@ app.route({
 			throw new Error("400::This user was not found in the database")
 		}
 		const plan = db_user?.billing?.plan
-		if (plan === "deleted"){
-			throw new Error("400::This account has been deleted. Please email us if you think it's a mistake!")
+		if (["deleted", 'refunded'].includes(plan)){
+			throw new Error(`400::This account has been ${plan}. Please email us if you think it's a mistake!`)
 		}
 
 		let download_counter = db_user.download_counter || {}
