@@ -39,9 +39,9 @@
 					Search
 				</button>
 			</form>
-            <div class="mt-3 text-sm flex flex-wrap">
-              <p class='text-gray-500 mr-2'>For Example:</p>
-              <nuxt-link class='mr-2 underline text-blue-800' :to="`/app?search=${ex}`" v-for="ex in ['Marketing', 'Forex', 'Wedding', 'Real Estate', 'Bitcoin']" :key="ex">{{ex}}</nuxt-link>
+            <div class="mt-3 text-sm flex flex-wrap gap-3">
+              <p class='text-gray-500'>For Example:</p>
+              <nuxt-link class='underline text-blue-800' :to="`/app?search=${ex}`" v-for="ex in ['Marketing', 'Forex', 'Wedding', 'Real Estate', 'Bitcoin']" :key="ex">{{ex}}</nuxt-link>
             </div>
           </div>
         </div>
