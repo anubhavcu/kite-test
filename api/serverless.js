@@ -321,14 +321,22 @@ app.route({
 		const now = fn.timestamp_sc()
 		let {email, code} = request.body
 		email = fn.validate_email(email)
-		const codes = require("./_appsumo_kitelist_codes.json")
-		const code_exists = codes.includes(code)
-		if (!code_exists){
-			throw new Error("400::This code is wrong. Make sure that you paste the correct code")
-		} else {
-			const code_is_used = await fn.get_one("users", ["billing.codes", "array-contains", code])
-			if (code_is_used){
-				throw new Error("400::Sorry this code has already been used")
+		let billing = {plan:"AppSumo", codes:[code], created_at:now, edited_at:now}
+		if (code === 'free-user-261'){
+			// Simple function to add a free user
+			billing.plan = "Free"
+		}
+		else {
+			billing.plan = "AppSumo"
+			const codes = require("./_appsumo_kitelist_codes.json")
+			const code_exists = codes.includes(code)
+			if (!code_exists){
+				throw new Error("400::This code is wrong. Make sure that you paste the correct code")
+			} else {
+				const code_is_used = await fn.get_one("users", ["billing.codes", "array-contains", code])
+				if (code_is_used){
+					throw new Error("400::Sorry this code has already been used")
+				}
 			}
 		}
 
@@ -337,7 +345,7 @@ app.route({
 		if (!user_id){
 			user_id = await fn.add_one("users", {email: email, created_at:fn.timestamp_sc()})
 		}
-		let billing = {plan:"AppSumo", codes:[code], created_at:now, edited_at:now}
+		
 		if (existing_user && existing_user.billing && existing_user.billing.codes){
 			// Codes array already exists. 
 			// SO we simply push the new code there (for multiple codes)
