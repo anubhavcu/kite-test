@@ -52,7 +52,7 @@
                 </li>
               </ul>
               <div class="rounded-md shadow">
-                <a href="https://buy.stripe.com/4gwg2WaV78s4dQk6oq" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900" aria-describedby="tier-standard">
+                <a :href="plans.monthly" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900" aria-describedby="tier-standard">
                   Get started
                 </a>
               </div>
@@ -89,7 +89,7 @@
                 </li>
               </ul>
               <div class="rounded-md shadow">
-                <a href="https://buy.stripe.com/eVa182gfr9w85jO5kl" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900" aria-describedby="tier-standard">
+                <a :href="plans.lifetime" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900" aria-describedby="tier-standard">
                   Get started
                 </a>
               </div>
@@ -104,3 +104,15 @@
 </div>
 </div>
 </template>
+<script>
+export default {
+	data(){
+		return {
+			plans:{
+				monthly:"https://buy.stripe.com/6oE03Vc346pXg4obIM",
+				lifetime:"https://buy.stripe.com/28obMDffg9C905qaEJ"
+			}
+		}
+	}
+}
+</script>
