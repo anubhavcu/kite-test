@@ -26,7 +26,7 @@
             <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
               <div>
                 <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-indigo-100 text-indigo-600" id="tier-standard">
-                  Lite Subscription
+                	Lite Subscription
                 </h3>
               </div>
               <div class="mt-4 flex items-baseline text-6xl font-extrabold">
