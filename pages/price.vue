@@ -9,7 +9,7 @@
           Pricing
         </h2>
         <p class="text-3xl font-extrabold text-black sm:text-4xl lg:text-5xl">
-          Get our Lifetime deal now
+          Get our Lifetime deal now!!
         </p>
         <p class="text-xl text-gray-900">
 			Stop paying monthly. Get our lifetime deal today and get access to unlimited exports for life!
