@@ -109,8 +109,8 @@ export default {
 	data(){
 		return {
 			plans:{
-				monthly:"https://buy.stripe.com/6oEcQefAq1tX0yA9AA",
-				annual:"https://buy.stripe.com/6oE4jI87Y0pT812cMN"
+				monthly: "https://buy.stripe.com/6oEcQefAq1tX0yA9AA",
+				annual: "https://buy.stripe.com/6oE4jI87Y0pT812cMN"
 			}
 		}
 	}
