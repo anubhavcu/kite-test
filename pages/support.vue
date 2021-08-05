@@ -55,7 +55,7 @@
             What's your refund policy?
           </dt>
           <dd class="mt-2 text-base text-gray-500">
-            If you are not satisfied we are more that happy to refund you your last payment (30 days refund policy)
+            If you are not satisfied we are more that happy to refund you your last payment (7 day refund policy)
           </dd>
         </div>
 

@@ -9,10 +9,10 @@
           Pricing
         </h2>
         <p class="text-3xl font-extrabold text-black sm:text-4xl lg:text-5xl">
-          Get our Lifetime deal now!!
+          Get our annual deal now!
         </p>
         <p class="text-xl text-gray-900">
-			Stop paying monthly. Get our lifetime deal today and get access to unlimited exports for life!
+			Use code annual20 for 20% off the annual plan and get access to unlimited exports for a year!
 		</p>
       </div>
     </div>
@@ -30,7 +30,7 @@
                 </h3>
               </div>
               <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                $18
+                $15
                 <span class="ml-1 text-2xl font-medium text-gray-500">
                   /mo
                 </span>
@@ -67,9 +67,9 @@
                 </h3>
               </div>
               <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                $99
+                $150
                 <span class="ml-1 text-2xl font-medium text-gray-500">
-                  /Lifetime
+                  /Annual
                 </span>
               </div>
               <p class="mt-5 text-lg text-gray-700">
@@ -78,7 +78,7 @@
             </div>
             <div class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
               <ul class="space-y-4">
-                <li class="flex items-start" v-for="x in ['Unlimited Exports per month', 'Unlimited Searches', 'Export all members', 'Export all subscribers', 'Lifetime Access']" :key="x">
+                <li class="flex items-start" v-for="x in ['Unlimited Exports per month', 'Unlimited Searches', 'Export all members', 'Export all subscribers', 'Yearly Access']" :key="x">
                   <div class="flex-shrink-0">
                     <!-- Heroicon name: outline/check -->
                     <svg class="h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -109,8 +109,8 @@ export default {
 	data(){
 		return {
 			plans:{
-				monthly:"https://buy.stripe.com/6oE03Vc346pXg4obIM",
-				lifetime:"https://buy.stripe.com/28obMDffg9C905qaEJ"
+				monthly:"https://buy.stripe.com/6oEcQefAq1tX0yA9AA",
+				annual:"https://buy.stripe.com/6oE4jI87Y0pT812cMN"
 			}
 		}
 	}
