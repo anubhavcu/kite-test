@@ -5,7 +5,7 @@
 	"author": "kitelist",
 	"private": true,
 	"engines": {
-		"node": ">=14.6"
+		"node": ">=16"
 	},
 	"scripts": {
 		"dev": "npm run dev_backend & npm run dev_frontend --port 3000",
