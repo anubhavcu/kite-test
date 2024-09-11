@@ -2,6 +2,7 @@
 const serverless = require('serverless-http')
 const fastify = require('fastify')
 const axios = require("axios")
+const fastifyCors = require('fastify-cors');
 const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
 const jwt = require('jsonwebtoken');
@@ -37,7 +38,11 @@ app.register(require('fastify-rate-limit'), {
 
 // Form body (for Paddle webhooks)
 // app.register(require('fastify-formbody'))
-
+app.register(fastifyCors, {
+	origin: '*', // or specify allowed origins
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
+	credentials: true // if credentials like cookies or headers are required
+  });
 // Decorate request (https://github.com/fastify/fastify/issues/1555)
 app.decorateRequest('user', null)
 

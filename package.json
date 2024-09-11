@@ -30,7 +30,8 @@
 		"@nuxtjs/sitemap": "^2.4.0",
 		"nuxt": "^2.15.6",
 		"papaparse": "^5.1.0",
-		"vue-gtag": "^1.11.0"
+		"vue-gtag": "^1.11.0",
+		"fastify-cors": "^6.0.3"
 	},
 	"devDependencies": {
 		"@nuxtjs/proxy": "^2.1.0",
