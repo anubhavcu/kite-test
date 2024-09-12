@@ -2,10 +2,6 @@
 	"rewrites": [
         { "source": "/api/(.*)", "destination": "/api/serverless.js" }
     ],
-	"trailingSlash": false,
-    "functions": {
-        "api/*/.js": {
-        "runtime": "nodejs16.x"
-        }
-    }
+	"trailingSlash": false
+   
 }
