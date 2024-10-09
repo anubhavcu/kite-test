@@ -1,10 +1,12 @@
 const isProd = process.env.NODE_ENV === "production"
 const useProxy = process.env.NODE_ENV === "development" && !process.env.NETLIFY
+import { defineNuxtConfig } from '@nuxt/bridge'
 
 console.log(`Building KiteList: [production: ${isProd}] - [Environment: ${process.env.NODE_ENV}]`)
 
-export default {
+export default defineNuxtConfig({
 	ssr: true, // Universal mode
+	bridge: false,
 	target: 'static',
 	telemetry: false,
 	components: true,
@@ -112,4 +114,4 @@ export default {
 		]
 	}
 
-}
+});

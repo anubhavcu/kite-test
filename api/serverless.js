@@ -2,7 +2,7 @@
 const serverless = require('serverless-http')
 const fastify = require('fastify')
 const axios = require("axios")
-const fastifyCors = require('fastify-cors');
+const fastifyCors = require('@fastify/cors').default;
 const isProd = process.env.NODE_ENV === "production"
 const fn = require("./_fn.js")
 const jwt = require('jsonwebtoken');
@@ -25,12 +25,12 @@ const app = fastify({
 })
 
 // HELMET SECURITY HEADER
-app.register(require('fastify-helmet'), {
+app.register(require('@fastify/helmet'), {
 	frameguard:false
 })
 
 // Rate limiting 
-app.register(require('fastify-rate-limit'), {
+app.register(require('@fastify/rate-limit').default, {
 	max: 15,
 	ban:3,
 	timeWindow: 30000 // '30 seconds'
@@ -517,11 +517,11 @@ app.route({
 
 if (require.main === module) {
 // called directly i.e. "node app"
-app.listen(3030, (err) => {
-	if (err) console.error(err)
-	console.log('server listening on 3030')
-})
-} else {
-// required as a module => executed on aws lambda
-exports.handler = serverless(app)
+app.listen({ port: process.env.PORT || 3000 }, (err) => {
+	if (err) {
+		console.log(err)
+		process.exit(1)
+	}
+	console.log(`Listening on ${process.env.PORT || 3000}`)
+});
 }

@@ -5,12 +5,12 @@
 	"author": "kitelist",
 	"private": true,
 	"engines": {
-		"node": "16.16.0"
+		"node": "20.17.0"
 	},
 	"scripts": {
 		"dev": "npm run dev_backend & npm run dev_frontend --port 3000",
 		"dev_backend": "nodemon --watch api -r dotenv/config ./api/serverless.js",
-		"dev_frontend": "nuxt dev --port $port",
+		"dev_frontend": "nuxt dev --port 3001",
 		"prebuild": "",
 		"build": "nuxt build",
 		"start": "nuxt start",
@@ -22,28 +22,29 @@
 		"go-live": "npx localtunnel --port 3000 --subdomain kitelist"
 	},
 	"dependencies": {
+		"@fastify/cors": "^7.0.0",
 		"@google-cloud/firestore": "^4.9.3",
 		"@google-cloud/storage": "^5.7.4",
+		"@nuxt/bridge": "^3.3.1",
 		"@nuxtjs/auth": "^4.9.1",
 		"@nuxtjs/axios": "^5.13.1",
 		"@nuxtjs/sentry": "^5.0.1",
 		"@nuxtjs/sitemap": "^2.4.0",
-		"nuxt": "^2.15.6",
-		"papaparse": "^5.1.0",
-		"vue-gtag": "^1.11.0",
-		"fastify-cors": "^6.0.3"
+		"nuxt": "^2.17.3",
+		"papaparse": "^5.4.1",
+		"vue-gtag": "^1.11.0"
 	},
 	"devDependencies": {
+		"@fastify/formbody": "^6.0.0",
+		"@fastify/helmet": "^8.0.0",
+		"@fastify/rate-limit": "^6.0.0",
 		"@nuxtjs/proxy": "^2.1.0",
-		"@nuxtjs/tailwindcss": "^4.1.3",
+		"@nuxtjs/tailwindcss": "^6.12.1",
 		"@sentry/node": "^6.1.0",
-		"fastify": "^3.11.0",
-		"fastify-formbody": "^5.0.0",
-		"fastify-helmet": "^5.2.0",
-		"fastify-rate-limit": "^5.0.1",
+		"fastify": "^3.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"nodemon": "^2.0.7",
-		"postcss": "^8.2.8",
+		"postcss": "^8.4.47",
 		"serverless-http": "^2.7.0"
 	}
 }
