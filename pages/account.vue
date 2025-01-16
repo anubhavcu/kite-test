@@ -1,6 +1,5 @@
 <template>
 	<div class='p-8'>
-		
 		<div>
 			<div class="space-y-1">
 				<h3 class="text-lg leading-6 font-medium text-gray-900"> Account </h3>
