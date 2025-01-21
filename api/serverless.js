@@ -35,7 +35,7 @@ app.register(require('@fastify/rate-limit').default, {
 	ban:3,
 	timeWindow: 30000 // '30 seconds'
 })
-
+ 
 fastify.register((fastify, options, done) => {
 	fastify.register(require("fastify-cors"), {
 	  origin: "*",
