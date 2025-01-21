@@ -303,9 +303,10 @@ app.route({
 		}
 	},
 	handler: async (request, reply) => {
+		console.log("search_term :: ",request.params.search_term);
 		const search_term = decodeURIComponent(request.params.search_term).toLowerCase()
 		const cache_id = hash(search_term)
-		const query = `site:https://twitter.com/i/lists/ OR site:twitter.com/*/lists ${search_term}`
+		const query = `site:https://x.com/i/lists/ OR site:x.com/*/lists ${search_term}`
 		const params = {cx:process.env.KITELIST_CUSTOM_SEARCH_CX, q:query, key:process.env.KITELIST_CUSTOM_SEARCH_API_KEY, imgSize:"small", num:10}
 		const cache = await fn.get_id("cached_searches", cache_id)
 		if (cache){
@@ -329,6 +330,7 @@ app.route({
 			.then(r => {return r.data.items || false})
 			.catch(e => {console.log(e); return false} )
 			
+			console.log("pageLists :: ",pageLists);
 			if (pageLists){
 				const cleanLists = pageLists.map(e => ({title:e.title, link:e.link, snippet:e.snippet, members:null, subscribers:null, image:(e.pagemap && e.pagemap.cse_image) ? e.pagemap.cse_image[0].src : null, }))
 				lists = [...lists, ...cleanLists]
