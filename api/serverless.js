@@ -96,7 +96,7 @@ app.setErrorHandler(async (error, req, reply) => {
 	}
 	
 	if (isProd) {
-		Sentry.init({ dsn: process.env.KITELIST_SENTRY_FASTIFY })
+		// Sentry.init({ dsn: process.env.KITELIST_SENTRY_FASTIFY })
 		Sentry.captureException(error);
 		await Sentry.flush(2000);
 	}
