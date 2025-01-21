@@ -63,7 +63,7 @@ app.addHook('onSend', async (request, reply, payload) => {
 	  });
 	return payload
 })
-
+  
 
 // Error Handler
 app.setErrorHandler(async (error, req, reply) => {
