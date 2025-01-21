@@ -36,18 +36,18 @@ app.register(require('@fastify/rate-limit').default, {
 	timeWindow: 30000 // '30 seconds'
 })
  
-fastify.register((fastify, options, done) => {
-	fastify.register(require("fastify-cors"), {
-	  origin: "*",
-	  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
-	});
-	fastify.route({
-	 methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
-	 url: "/api",
-	  handler: productsController.addProduct
-	});
-	done();
-  });
+// fastify.register((fastify, options, done) => {
+// 	fastify.register(require("fastify-cors"), {
+// 	  origin: "*",
+// 	  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
+// 	});
+// 	fastify.route({
+// 	 methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
+// 	 url: "/api",
+// 	  handler: productsController.addProduct
+// 	});
+// 	done();
+//   });
  
 // Form body (for Paddle webhooks)
 // app.register(require('fastify-formbody'))
