@@ -48,7 +48,7 @@ fastify.register((fastify, options, done) => {
 	});
 	done();
   });
-
+ 
 // Form body (for Paddle webhooks)
 // app.register(require('fastify-formbody'))
 app.register(fastifyCors, {
