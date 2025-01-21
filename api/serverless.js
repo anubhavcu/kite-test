@@ -41,6 +41,7 @@ app.register(require('@fastify/rate-limit').default, {
 app.register(fastifyCors, {
 	origin: '*', // or specify allowed origins
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed HTTP methods
+	allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
 	credentials: true // if credentials like cookies or headers are required
   });
 // Decorate request (https://github.com/fastify/fastify/issues/1555)
@@ -54,6 +55,12 @@ app.addHook('onSend', async (request, reply, payload) => {
 			'Cache-Control': 's-maxage=6000, stale-while-revalidate'
 		})
 	}
+	  // Always set CORS headers (even for non-auth requests)
+	  reply.headers({
+		'Access-Control-Allow-Origin': '*', // Allow all origins
+		'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Allowed methods
+		'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allowed headers
+	  });
 	return payload
 })
 
@@ -90,6 +97,19 @@ app.setErrorHandler(async (error, req, reply) => {
 
 // Routes
 
+// Example route
+// fastify.get('/api', async (request, reply) => {
+// 	return { message: 'CORS and caching headers are set!' };
+//   });
+  
+  // Start the server
+//   fastify.listen({ port: 3000 }, (err) => {
+// 	if (err) {
+// 	  console.error(err);
+// 	  process.exit(1);
+// 	}
+// 	console.log('Server is running on http://localhost:3000');
+//   });
 
 app.route({
 	url:"/api/test",
